@@ -2,7 +2,7 @@ var j = jQuery.noConflict();
 var defaultPagePath='app/pages/';
 var headerMsg = "Expenzing";
 var urlPath;
-var WebServicePath ='http://1.255.255.169:8085/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath ='http://1.255.255.214:8085/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
