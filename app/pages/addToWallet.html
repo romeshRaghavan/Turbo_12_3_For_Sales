@@ -1,26 +1,37 @@
-
-<div class="modal-body clearfix">
+<script type="text/javascript">
+		var lang = new Lang();
+		lang.dynamic('th', 'js/langpack/th.json');
+        lang.dynamic('ru','js/langpack/russian.json');
+        lang.dynamic('ae','js/langpack/arabic.json');
+        lang.dynamic('tamil','js/langpack/tamil.json');
+        lang.dynamic('hindi','js/langpack/hindi.json');
+		lang.init({
+			defaultLang: 'en'
+		});
+</script>
+<br>
+<div class="modal-body clearfix" style=" background-color: white;height: inherit;">
 <div class="row">
 <div class="col-lg-12 screenshot clearfix">
       <div class="col-lg-12 clearfix allexpebtn" id="walletBox">
-            <h1>My Receipts Wallet</h1>
+            <h1 lang="en">My Receipts Wallet</h1>
       </div>
       <div>
-	  <li style="text-align:left;">
-          <ul>
+	  <div style="text-align:center;">
+          <div lang="en" >
 		  Add to My Receipts Wallet
             <img src="images/camera.png" onclick="capturePhoto(1,'wallet');" width="15%" height="15%" >
             <img src="images/gallery.png" onclick="getPhoto(pictureSource.PHOTOLIBRARY,1,'wallet');" width="15%" height="15%" >
 			<img style="display:none;width:35%;height:80px;align:right;" id="smallImageWallet" src="" />
             <input style="display:none;" type="file" id="imageWallet" />
-          </ul>
-      </li>
+          </div>
+          </div>
       </div>
 </div>
     <div  style="display:none" id="loading_Cat" >
                <img src="images/loading2.gif" id="loading-image_Cat" alt="Loading..." >
     </div>
-	<div  style="display:none" id="wallet_msg" class="displaywalletmsg"> 
+	<div lang="en"  style="display:none" id="wallet_msg" class="displaywalletmsg"> 
             
     </div>
 </div>

@@ -49,6 +49,7 @@
 	display: block;
 	font-weight: bold;
 	text-align: center;
+    padding-left: 5px
 }
 .allexpebtn {
 	text-align:center;
@@ -111,7 +112,7 @@
 }
 .footer {
 	border-top: 1px solid #e5e5e5;
-	color: #000000;
+	color: #ffffff;
 	font-size: 13px;
 	font-weight: normal;
 	margin: 0 0 15px;
@@ -123,7 +124,7 @@
 	font-weight: bold;
 	margin: 0 auto 4px;
 	text-align: left;
-	width: 98%;
+	width: 100%;
 }
 .table-responsive td:first-child {
 	font-weight:bold;
@@ -194,7 +195,7 @@
 #mainContainer {
     float: left;
     overflow-x: hidden;
-    padding: 12% 6% 12%;
+    padding: 5% 0% 5%;
     width: 100%;
 }
 .selected {
@@ -334,8 +335,8 @@
     margin: 5px auto;
     padding: 6px;
     position: absolute;
-    right: 7%;
-    top: -45px;
+    right: 8%;
+    top: 15px;
     width: 252px;
     opacity: 0.7;
     margin-top: 4%;
@@ -421,8 +422,8 @@
     {
         display: table-cell;
         border-width: thin;
-        padding-left: 5%;
-        padding-right: 5%;
+        padding-left: 15%;
+        padding-right: 15%;
 	}
 
 .Table
@@ -498,12 +499,13 @@
 	width: 90%;
 	position: relative;
 	margin: 1% auto;
-	padding: 5px 20px 13px 20px;
-	border-radius: 10px;
+	padding: 15px 20px 17px 21px;
+	border-radius: 20px;
 	background: #fff;
 	background: -moz-linear-gradient(#fff, #999);
 	background: -webkit-linear-gradient(#fff, #999);
 	background: -o-linear-gradient(#fff, #999);
+    margin-top: 60px;
 }
 
 .close {
@@ -535,7 +537,7 @@
 }
 
 a {
-	color:#337ab7;
+	color:#000000;
 	text-decoration:none
 }
 a:focus, a:hover {
@@ -557,8 +559,8 @@ a:active, a:hover {
 
 
 .container {
-	padding-right:15px;
-	padding-left:15px;
+	padding-right:0px;
+	padding-left:0px;
 	margin-right:auto;
 	margin-left:auto
 }
@@ -585,5 +587,174 @@ transition:transform .3s ease-out;
 .modal-dialog {
 	position:relative;
 	width:auto;
-	margin:10px
+	margin:0px;
+    color:#000000
+}
+
+.addrequestAdvancelogo {
+	background-image: url("../images/rquestAdavnce.png");
+	background-repeat: no-repeat;
+	width: 55px;
+	height: 55px;
+	margin-top: 15%;
+	margin-bottom: 3%;
+    margin-left: 30%;
+	margin-right: 70px;
+}
+
+.emplAdvVoucherNo{
+    width: 58.5%;   
+}
+.table1 {
+    margin-bottom: 0px;
+}
+
+.topfixednavigate {
+    background-color: #100101;
+    border-bottom: 1px solid #999999;
+    color: #FFFFFF;
+    height: 40px;
+    left: 0;
+    margin: 0 auto;
+    padding: 38px 3px 6px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+}
+
+
+.main-wrapper {
+	background-image:url(../images/background-expense.jpg);
+	background-position: center;
+	background-repeat:no-repeat;
+	margin:5px auto;
+	height:227px;
+
+}
+
+.startLoginPage {
+	font-size:20px;
+	color:#9BCC49;
+	text-align:center;
+	margin-top:0px;
+	font-weight:bold;
+	padding-bottom: 8px;
+}
+
+.softwarecontent {
+	font-size:21px;
+	color:#ffffff;
+	text-align:center;
+	margin-top:20px;
+}
+
+.softwarecontent b, .softwarecontent strong {
+	font-weight:normal;
+	color:#4ebbd2;
+}
+.softwarecontent strong {
+	font-weight:normal;
+	color:#9bcc53;
+}
+
+.companyLogo {
+    background-image: url("../images/expenzing-logo.png");
+	background-repeat: no-repeat;
+    background-position: center; 
+	height: 85px;
+
+
+}
+
+
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 19px;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 30px;
+    right: 0px;
+    font-size: 45px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+div.image {
+   content:url(../images/ar-n.png);
+}
+
+.addenglishflag {
+	background-image: url("../images/english.jpg");
+    background-repeat: no-repeat;
+    width: 70px;
+    height: 50px;
+    margin-top: 15%;
+    margin-bottom: 3%;
+    margin-left: 26%;
+	margin-right: 25px;
+}
+
+.addrussianflag {
+	background-image: url("../images/russia.jpg");
+    background-repeat: no-repeat;
+    width: 70px;
+    height: 50px;
+    margin-top: 15%;
+    margin-bottom: 3%;
+    margin-left: 26%;
+	margin-right: 30px;
+}
+.addarabicflag {
+	background-image: url("../images/arabic.png");
+    background-repeat: no-repeat;
+    width: 70px;
+    height: 50px;
+    margin-top: 15%;
+    margin-bottom: 3%;
+    margin-left: 26%;
+	margin-right: 25px;
+}
+
+.addInTamilflag {
+	background-image: url("../images/india(tamil).png");
+    background-repeat: no-repeat;
+    width: 70px;
+    height: 50px;
+    margin-top: 15%;
+    margin-bottom: 3%;
+    margin-left: 26%;
+	margin-right: 30px;
 }

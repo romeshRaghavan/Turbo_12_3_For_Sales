@@ -1,27 +1,37 @@
 <script>
 	oprationOnWallet();
-	 hideTRMenus();
+	// hideTRMenus();
+    // hideEAMenus();
+     hideMultilanguage();
 </script> 
+<script type="text/javascript">
+		var lang = new Lang();
+		lang.dynamic('th', 'js/langpack/th.json');
+        lang.dynamic('ru','js/langpack/russian.json');
+        lang.dynamic('ae','js/langpack/arabic.json');
+        lang.dynamic('tamil','js/langpack/tamil.json');
+        lang.dynamic('hindi','js/langpack/hindi.json');
+    lang.init({
+			defaultLang: 'en'
+		});
+</script>
 <div class="topfixednavigate" >
 <a href="#" class="backarrowbtn">
 <img src="images/left-arrow.png" width="15px" height="25px" onclick="goBack();"/>
 <img class="expenzingImg" src="images/Expenzing_Square.png" onclick="goBack();"/></a>
 <img class="selectionSynchBEBtns" width="35px" height="25px" src="images/synch.png" id="synchWallet" >
-<div class="dropdown aligndropdownv" align="right">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-	</button>
-    <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
-			  <li role="presentation"><a role="menuitem" tabindex="-1" onclick="synchronizeBEMasterData()">Sync Business Expense Master</a></li>
-			   <div id="TrRoleID" style="font-weight: 400;padding: 3px 20px;line-height: 1.42857143;text-align: left;white-space: nowrap;">
-			  <li role="presentation"><a role="menuitem"  style="color: #333;" tabindex="-1" onclick="synchronizeTRMasterData();">Sync Travel Master</a></li>
-			  <li role="presentation"><a role="menuitem" style="color: #333;" tabindex="-1" onclick="synchronizeTRForTS();">Pull Travel Request to Settle</a></li>
-			  </div>
-			</ul>
-</div>
- <div  style="display:none" id="syncSuccessMsg" class="displaysynctext">
+<spen id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#" onclick="showSyncMaster()" lang="en">Sync Masters</a>
+  <a href="#" id='multiLang' onclick="showMultiLanguag()" lang="en">Settings</a>
+  <a href="#"  onclick="showHelpMenu()" lang="en">Help</a>
+</spen>
+
+<span style="font-size:30px;cursor:pointer;position: absolute;left: auto;top: inherit;right: inherit;padding-right: 16px;padding-top: 10px;" align="right" onclick="openNav();"><img src="css/cssimages/nav-icon.png" width="30px" height="25px"/></span>
+ <div  style="display:none" id="syncSuccessMsg" class="displaysynctext" lang="en">
                Expenses synchronized successfully.
   		</div>
-		<div  style="display:none" id="syncFailureMsg" class="displaysynctext">
+		<div  style="display:none" id="syncFailureMsg" class="displaysynctext" lang="en">
                Expenses not synchronized successfully.
   		</div>
 </div>
