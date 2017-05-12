@@ -132,8 +132,8 @@ function commanLogin(){
  	var domainName = userNameValue.split('@')[1];
 	var jsonToDomainNameSend = new Object();
 	jsonToDomainNameSend["userName"] = domainName;
-	//jsonToDomainNameSend["mobilePlatform"] = device.platform;
-	jsonToDomainNameSend["mobilePlatform"] = "Android";
+	jsonToDomainNameSend["mobilePlatform"] = device.platform;
+	//jsonToDomainNameSend["mobilePlatform"] = "Android";
   	//var res=JSON.stringify(jsonToDomainNameSend);
 	var requestPath = WebServicePath;
 	j.ajax({
@@ -1406,13 +1406,13 @@ function setPerUnitDetails(transaction, results){
 		        ismodeCategoryJSON["expenseNameId"]=row.expenseNameId;
 		        ismodeCategoryJSON["isModeCategory"]=row.isModeCategory;
 		      if(ismodeCategoryJSON.isModeCategory=='N'){
-					  j('#travelMode').select2('data', '');
-					  j('#travelCategory').select2('data', '');
-					  j('#travelMode').select2('disable');
-					  j('#travelCategory').select2('disable');
+					  j('#travelModeForTS').select2('data', '');
+					  j('#travelCategoryForTS').select2('data', '');
+					  j('#travelModeForTS').select2('disable');
+					  j('#travelCategoryForTS').select2('disable');
 				}else{
-					  j('#travelMode').select2('enable');
-					  j('#travelCategory').select2('enable');
+					  j('#travelModeForTS').select2('enable');
+					  j('#travelCategoryForTS').select2('enable');
 				}
 		}else{
 
