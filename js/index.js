@@ -134,6 +134,7 @@ function commanLogin(){
 	jsonToDomainNameSend["userName"] = domainName;
 	jsonToDomainNameSend["mobilePlatform"] = device.platform;
 	//jsonToDomainNameSend["mobilePlatform"] = "Android";
+	jsonToDomainNameSend["appType"] = "NEXGEN_EXPENZING_TNE_APP`";
   	//var res=JSON.stringify(jsonToDomainNameSend);
 	var requestPath = WebServicePath;
 	j.ajax({
