@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.tne.expenzingNexgenTnEInternal" version="1.5" android-versionCode="91" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.phonegap.tne.expenzingNexgenTnE" version="1.5.3" android-versionCode="96" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
 <!--widget id="com.expenzing.expenzing" version="1.1.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0"-->
-    <name>Expenzing Nexgen TnE(Test)</name>
+    <name>Expenzing Nexgen TnE</name>
     <description>
         Expenzing Application
     </description>
