@@ -1,7 +1,7 @@
 var j = jQuery.noConflict();
 var defaultPagePath='app/pages/';
 var headerMsg = "Expenzing";
-var urlPath;
+//var urlPath = 'http://1.255.255.36:13130/TnEV1_0AWeb/WebService/Login/'
 //var WebServicePath ='http://1.255.255.214:8085/NexstepWebService/mobileLinkResolver.service';
 var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
@@ -130,10 +130,10 @@ function commanLogin(){
  	var userName = document.getElementById("userName");
  	var userNameValue = userName.value; 
  	var domainName = userNameValue.split('@')[1];
-	var jsonToDomainNameSend = new Object();
+	 var jsonToDomainNameSend = new Object();
 	jsonToDomainNameSend["userName"] = domainName;
-	jsonToDomainNameSend["mobilePlatform"] = device.platform;
-	//jsonToDomainNameSend["mobilePlatform"] = "Android";
+	//jsonToDomainNameSend["mobilePlatform"] = device.platform;
+	jsonToDomainNameSend["mobilePlatform"] = "Android";
 	jsonToDomainNameSend["appType"] = "NEXGEN_EXPENZING_TNE_APP";
   	//var res=JSON.stringify(jsonToDomainNameSend);
 	var requestPath = WebServicePath;
@@ -498,7 +498,7 @@ function createAccHeadDropDown(jsonAccHeadArr){
 				minimumResultsForSearch: -1,
 				initSelection: function (element, callback) {
 					callback(jsonArr[1]);
-					getExpenseNamesBasedOnAccountHead();
+					 getExpenseNamesBasedOnAccountHead();
 				},
 				formatResult: function(result) {
 					if ( ! isJsonString(result.id))
@@ -1265,7 +1265,6 @@ function onloadTimePicker(){
  }
 
  function getExpenseNamesBasedOnAccountHead(){
-
  	var accountHeadID = j("#accountHead").select2('data').id;
       getExpenseNamesfromDB(accountHeadID);
  }
@@ -1972,18 +1971,20 @@ function oprationONTravelSettlementExp(){
                 destinationType=navigator.camera.DestinationType;
             }
 	
-	function onPhotoDataSuccess(imageData) { 
+	function onPhotoDataSuccess(imageData) {
+
        resetImageData();
        if(voucherType == 'wallet'){
-       	smallImageWallet.style.display = 'block';       
-        document.getElementById('imageWallet').files[0] = "data:image/jpeg;base64," + imageData;
+       	smallImageWallet.style.display = 'block'; 
+        //document.getElementById('imageWallet').files[0] = "data:image/jpeg;base64," + imageData;
+        document.getElementById('imageWallet').setAttribute('src', "data:image/jpeg;base64," + imageData);
 		smallImageWallet.src = "data:image/jpeg;base64," + imageData;
 		if(camerastatus=='1')
 		{
 		saveWalletAttachment(0);	
 		}
        }else if(voucherType == 'BE'){
-       	smallImageBE.style.display = 'block';       
+       	smallImageBE.style.display = 'block'; 
         fileTempCameraBE = "data:image/jpeg;base64," + imageData;
 		smallImageBE.src = "data:image/jpeg;base64," + imageData;
 		fileTempGalleryBE ="";
@@ -2024,7 +2025,6 @@ function resetImageData(){
 		smallImageWallet.style.display = 'block';
 
         document.getElementById('imageWallet').files[0] = "data:image/jpeg;base64," + imageURI;
-		
 		smallImageWallet.src = "data:image/jpeg;base64," + imageURI;
 		
 		 if(camerastatus=='1')
@@ -2033,7 +2033,6 @@ function resetImageData(){
 		}
        }else if(voucherType == 'BE'){
 		smallImageBE.style.display = 'block';
-
         fileTempGalleryBE = "data:image/jpeg;base64," + imageURI;
 		
 		smallImageBE.src = "data:image/jpeg;base64," + imageURI;
@@ -2999,7 +2998,7 @@ function onloadDefaultValue(){
 
 
 function viewMessages(){
-	var e = { "data" : {"address": "paytm", "body":"You have made payment of Rs.135.00 to om rest.", "date_sent":1482401219880}}
+	/*var e = { "data" : {"address": "paytm", "body":"You have made payment of Rs.135.00 to om rest.", "date_sent":1482401219880}}
 	 saveIncomingSMSOnLocal(e);
 	 var e1 = { "data" : {"address": "freecharge", "body":"Recharge of BSNL mobile for Rs.54 was successful. operator refrence number is 0154324", "date_sent":1482601219880}}
 	 saveIncomingSMSOnLocal(e1);
@@ -3008,7 +3007,7 @@ function viewMessages(){
 	 var e3 = { "data" : {"address": "paytm", "body":"Hi,  your order #142592342342 of Rs. 2490 for 2 items is successful. we will let you know once seller ships it.", "date_sent":1482201219880}}
 	 saveIncomingSMSOnLocal(e3);
 	 var e4 = { "data" : {"address": "Creditcard", "body":"hi, payment of your electricity bill was successful for Rs.987.", "date_sent":1482101219880}}
-	 saveIncomingSMSOnLocal(e4);
+	 saveIncomingSMSOnLocal(e4);*/
 
 	 //console.log("viewMessages  "+filtersStr)
     var headerBackBtn=defaultPagePath+'headerPageForSMSOperation.html';

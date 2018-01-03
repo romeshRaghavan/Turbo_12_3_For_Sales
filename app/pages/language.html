@@ -5,6 +5,7 @@
         lang.dynamic('ae','js/langpack/arabic.json');
         lang.dynamic('tamil','js/langpack/tamil.json');
         lang.dynamic('hindi','js/langpack/hindi.json');
+        lang.dynamic('ka','js/langpack/kannada.json');
 		lang.init({
 			defaultLang: 'en'
 		});
@@ -23,6 +24,8 @@
             India(Tamil)</span></a></td>
     <td><a onclick="setLang('hindi');"><p class="addInTamilflag" ></p><span style="color: #14a6c5;">
             India(Hindi)</span></a></td>
+      <td><a onclick="setLang('ka');"><p class="addInTamilflag" ></p><span style="color: #14a6c5;">
+            India(kannada)</span></a></td>
   </tr>
                 
 
@@ -40,7 +43,7 @@
 <script>
     
     function setLang(lang){
-         window.lang.change(lang);
+        window.lang.change(lang);
         window.localStorage.setItem("localLanguage",lang);
         populateMainPage();
     }

@@ -1,4 +1,4 @@
-var appPageHistory=[];
+ var appPageHistory=[];
 var jsonToBeSend=new Object();
 var jsonBEArr = [];
 var budgetingStatus;
@@ -142,7 +142,7 @@ if (window.openDatabase) {
 		t.executeSql("CREATE TABLE IF NOT EXISTS accountHeadMst (accountHeadId INTEGER PRIMARY KEY ASC, accHeadName TEXT)");
 		t.executeSql("CREATE TABLE IF NOT EXISTS expNameMst (id INTEGER PRIMARY KEY ASC,expNameMstId INTEGER, expName TEXT, expIsFromToReq CHAR(1), accCodeId INTEGER NOT NULL, accHeadId INTEGER NOT NULL, expIsUnitReq CHAR(1), expRatePerUnit Double, expFixedOrVariable CHAR(1), expFixedLimitAmt Double,expPerUnitActiveInative CHAR(1),isErReqd CHAR(1),limitAmountForER Double)");
 		t.executeSql("CREATE TABLE IF NOT EXISTS businessExpDetails (busExpId INTEGER PRIMARY KEY ASC, accHeadId INTEGER REFERENCES accountHeadMst(accHeadId), expNameId INTEGER REFERENCES expNameMst(expNameId),expDate DATE, expFromLoc TEXT, expToLoc TEXT, expNarration TEXT, expUnit INTEGER, expAmt Double, currencyId INTEGER REFERENCES currencyMst(currencyId),isEntitlementExceeded TEXT,busExpAttachment BLOB,wayPointunitValue TEXT)");
-		t.executeSql("CREATE TABLE IF NOT EXISTS walletMst (walletId INTEGER PRIMARY KEY ASC AUTOINCREMENT, walletAttachment BLOB)");
+		t.executeSql("CREATE TABLE IF NOT EXISTS walletMst (walletId INTEGER PRIMARY KEY ASC AUTOINCREMENT, walletAttachment  BLOB)");
 		t.executeSql("CREATE TABLE IF NOT EXISTS travelModeMst (travelModeId INTEGER PRIMARY KEY ASC, travelModeName TEXT)");
 		t.executeSql("CREATE TABLE IF NOT EXISTS travelCategoryMst (travelCategoryId INTEGER PRIMARY KEY ASC, travelCategoryName TEXT,travelModeId INTEGER)");
 		t.executeSql("CREATE TABLE IF NOT EXISTS cityTownMst (cityTownId INTEGER PRIMARY KEY ASC, cityTownName TEXT)");
@@ -1017,7 +1017,6 @@ function getExpNameList(transaction, results) {
 
 		jsonFindExpNameHead["ExpenseID"] = row.id;
 		jsonFindExpNameHead["ExpenseName"] = row.expName;
-		
 		jsonExpNameArr.push(jsonFindExpNameHead);
 	}
 	createExpNameDropDown(jsonExpNameArr);
@@ -1233,6 +1232,7 @@ function fetchWalletImage() {
 							
 							j('<td></td>').attr({ class: ["walletattach"].join(' ') }).html('<text style="display: none">'+row.walletAttachment+'</text>'+'<p id="para" style="display: none">'+row.walletId+'</p>'+'<img src="'+row.walletAttachment+'">').appendTo(rowsWallet);
 							
+                        	
 					}	
 				j("#walletSource td").click(function(){
 					headerOprationBtn = defaultPagePath+'headerPageForWalletOperation.html';
@@ -1261,11 +1261,12 @@ function saveWalletAttachment(status){
 	if (mydb) {
 		//get the values of the text inputs
       
-		var file = document.getElementById('imageWallet').files[0];
-		
+		//var file = document.getElementById('imageWallet').files[0];
+        var file = document.getElementById("imageWallet").src;
+	
 	if (file != "") {
-            mydb.transaction(function (t) {
-                t.executeSql("INSERT INTO walletMst (walletAttachment) VALUES (?)", 
+        mydb.transaction(function (t) {
+            t.executeSql("INSERT INTO walletMst (walletAttachment) VALUES (?)", 
 											[file]);
                 if(status == "0"){
 					document.getElementById('imageWallet').value ="";	
