@@ -106,6 +106,8 @@
     <gap:splash gap:platform="android" gap:qualifier="port-mdpi" src="www/res/screen/android/screen-mdpi-portrait.png" />
     <gap:splash gap:platform="android" gap:qualifier="port-hdpi" src="www/res/screen/android/screen-hdpi-portrait.png" />
     <gap:splash gap:platform="android" gap:qualifier="port-xhdpi" src="www/res/screen/android/screen-xhdpi-portrait.png" />
+    <splash src="res/splash/ios/Default2x.png" />
+    <splash src="res/splash/ios/Default-568h@2x.png" />
     <gap:splash gap:platform="ios" height="480" src="res/splash/ios/Default.png" width="320" />
     <gap:splash gap:platform="ios" height="960" src="res/splash/ios/Default2x.png" width="640" />
     <gap:splash gap:platform="ios" height="1136" src="res/splash/ios/Default-568h@2x.png" width="640" />
