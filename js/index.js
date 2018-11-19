@@ -41,6 +41,7 @@ function login()
    {
    	if(document.getElementById("userName")!=null){
     var userName = document.getElementById("userName");
+    alert("!!!!!!!!!"+userName)
 	}else if(document.getElementById("userName")!=null){
 		var userName = document.getElementById("userNameId");
 	}
@@ -132,8 +133,8 @@ function commanLogin(){
  	var domainName = userNameValue.split('@')[1];
 	 var jsonToDomainNameSend = new Object();
 	jsonToDomainNameSend["userName"] = domainName;
-	jsonToDomainNameSend["mobilePlatform"] = device.platform;
-	//jsonToDomainNameSend["mobilePlatform"] = "Android";
+	//jsonToDomainNameSend["mobilePlatform"] = device.platform;
+	jsonToDomainNameSend["mobilePlatform"] = "Android";
 	jsonToDomainNameSend["appType"] = "NEXGEN_EXPENZING_TNE_APP";
   	//var res=JSON.stringify(jsonToDomainNameSend);
 	var requestPath = WebServicePath;
@@ -1495,7 +1496,7 @@ function calculatePerUnit(){
 function checkAmount(){
 		 
 		 var amount=document.getElementById("expAmt").value;
-		if(isOnlyNumeric(amount,"Amount")==false)
+		if(isNumber_optionalDot(amount,"Amount")==false)
 		{	
 			document.getElementById("expAmt").value="";
 			return false;
@@ -1651,20 +1652,18 @@ function validateTSDetails(exp_date,exp_narration,exp_unit,exp_amt,travelRequest
             alert(window.lang.translate('Unit is invalid.'));
 			return false;
 		}
-	if(exp_amt != ""){
-			if(isOnlyNumeric(exp_amt,"Amount")==false)
+	
+		if(exp_amt != ""){
+			if(isNumber_optionalDot(exp_amt,"Amount")==false)
 			{
 				return false;
 			}
-			if(isZero(exp_amt,"Amount")==false)
-			{
-				document.getElementById("expAmt").value="";
-				return false;
-			}
+			
 		}else{
-            alert(window.lang.translate('Amount is invalid.'));
+            alert(window.lang.translate('Amount is invalid'));
 			return false;
 		}
+		
 	if(currency_id == "-1"){
         alert(window.lang.translate('Currency Name is invalid.'));
 		return false;
@@ -2003,7 +2002,7 @@ function resetImageData(){
 	fileTempGalleryTS = "";
 }
 
-	function capturePhoto(status,voucher_type) {
+		function capturePhoto(status,voucher_type) {
 
 	voucherType = voucher_type;	
 		navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 10,
