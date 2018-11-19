@@ -2,9 +2,9 @@ var j = jQuery.noConflict();
 var defaultPagePath='app/pages/';
 var headerMsg = "Expenzing";
 //var urlPath = 'http://1.255.255.36:13130/TnEV1_0AWeb/WebService/Login/'
-//var WebServicePath ='http://1.255.255.184:8085/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath ='http://1.255.255.214:8085/NexstepWebService/mobileLinkResolver.service';
+ var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath ='http://1.255.255.197:8082/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -51,18 +51,35 @@ function login()
     jsonToBeSend["pass"] = password.value;
 	//setUrlPathLocalStorage(urlPath);
 	urlPath=window.localStorage.getItem("urlPath");
+	alert('url path : ' + urlPath);
 	j('#loading').show();
+	urlPath = urlPath+"LoginWebService";
+	alert('valling URL : ' + urlPath);
+	alert('req data : ' + JSON.stringify(jsonToBeSend));
+	try{
     j.ajax({
-         url: urlPath+"LoginWebService",
+         url: urlPath,
          type: 'POST',
          dataType: 'json',
          crossDomain: true,
          data: JSON.stringify(jsonToBeSend),
          success: function(data) {
+
+
+         	
+         	alert('only data : ' + JSON.stringify(data));
+         	try{
+
+
+
+
+         		alert('status : ' + data.Status);
          	if (data.Status == 'Success'){
-                
+                alert('sucess data : ' + JSON.stringify(data));
+                console.log('data : ' + JSON.stringify(data));
                 if(data.hasOwnProperty('multiLangInMobile') && data.multiLangInMobile != null &&
                    data.multiLangInMobile){
+                   	alert('multiLangInMobile');
                        	var headerBackBtn=defaultPagePath+'withoutBckBtn.html';
 	                    var pageRef=defaultPagePath+'language.html';
                     j('#mainHeader').load(headerBackBtn);
@@ -72,6 +89,7 @@ function login()
 			        setUserSessionDetails(data,jsonToBeSend);
                     j('#loading').hide();         
         }else{
+        	alert('not multiLangInMobile');
             var headerBackBtn=defaultPagePath+'categoryMsgPage.html';
 	        var pageRef=defaultPagePath+'category.html';
         	 j('#mainHeader').load(headerBackBtn);
@@ -117,16 +135,20 @@ function login()
 			    j('#loading').hide();
             alert(window.lang.translate('Please enter correct username or password'));
            }
-
+       }catch(e){alert('parsing error : ' + e);}
          },
          error:function(data) {
+         	alert('failure data : ' + JSON.stringify(data));
 		   j('#loading').hide();
          }
    });
-
+}catch(e){alert('ajax error : ' + e);}
+	alert('something wrong.');
+	j('#loading').hide();
 }
  
 function commanLogin(){
+	alert('first 123');
  	var userName = document.getElementById("userName");
  	var userNameValue = userName.value; 
  	var domainName = userNameValue.split('@')[1];
@@ -497,7 +519,7 @@ function createAccHeadDropDown(jsonAccHeadArr){
 				data:{ results: jsonArr, text: 'name' },
 				minimumResultsForSearch: -1,
 				initSelection: function (element, callback) {
-					callback(jsonArr[1]);
+					callback(jsonArr[4]);
 					 getExpenseNamesBasedOnAccountHead();
 				},
 				formatResult: function(result) {
@@ -505,7 +527,7 @@ function createAccHeadDropDown(jsonAccHeadArr){
 						result.id = JSON.stringify(result.id);
 						return result.name;
 				}
-			});
+			}).select2("val","");
 			
 }
 function createTRAccHeadDropDown(jsonAccHeadArr){
@@ -551,7 +573,7 @@ function createExpNameDropDown(jsonExpNameArr){
 		data:{ results: jsonExpArr, text: 'name' },
 		minimumResultsForSearch: -1,
 		initSelection: function (element, callback) {
-			callback(jsonExpArr[0]);
+			callback(jsonExpArr[5]);
 		},
 		formatResult: function(result) {
 			if ( ! isJsonString(result.id))
@@ -800,7 +822,7 @@ function validateExpenseDetails(exp_date,exp_from_loc,exp_to_loc,exp_narration,e
 		
 
 		if(exp_amt != ""){
-			if(isOnlyNumeric(exp_amt,"Amount")==false)
+			if(isNumber_optionalDot(exp_amt,"Amount")==false)
 			{
 				return false;
 			}
@@ -1651,18 +1673,20 @@ function validateTSDetails(exp_date,exp_narration,exp_unit,exp_amt,travelRequest
             alert(window.lang.translate('Unit is invalid.'));
 			return false;
 		}
-	
-		if(exp_amt != ""){
-			if(isNumber_optionalDot(exp_amt,"Amount")==false)
+	if(exp_amt != ""){
+			if(isOnlyNumeric(exp_amt,"Amount")==false)
 			{
 				return false;
 			}
-			
+			if(isZero(exp_amt,"Amount")==false)
+			{
+				document.getElementById("expAmt").value="";
+				return false;
+			}
 		}else{
-            alert(window.lang.translate('Amount is invalid'));
+            alert(window.lang.translate('Amount is invalid.'));
 			return false;
 		}
-
 	if(currency_id == "-1"){
         alert(window.lang.translate('Currency Name is invalid.'));
 		return false;
@@ -1969,24 +1993,7 @@ function oprationONTravelSettlementExp(){
                 destinationType=navigator.camera.DestinationType;
             }
 	
-
-function resetImageData(){
-	fileTempCameraBE = "";
-	fileTempCameraTS = "";
-	fileTempGalleryBE = "";
-	fileTempGalleryTS = "";
-}
-
-		function capturePhoto(status,voucher_type) {
-
-	voucherType = voucher_type;	
-		navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 10,
-            destinationType: 0 });
-		camerastatus = status;
-		
-	}
-
-		function onPhotoDataSuccess(imageData) {
+	function onPhotoDataSuccess(imageData) {
        resetImageData();
        if(voucherType == 'wallet'){
        	smallImageWallet.style.display = 'block'; 
@@ -2010,6 +2017,22 @@ function resetImageData(){
 		fileTempGalleryTS ="";
        }
     }
+
+function resetImageData(){
+	fileTempCameraBE = "";
+	fileTempCameraTS = "";
+	fileTempGalleryBE = "";
+	fileTempGalleryTS = "";
+}
+
+	function capturePhoto(status,voucher_type) {
+
+	voucherType = voucher_type;	
+		navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 10,
+            destinationType: 0 });
+		camerastatus = status;
+		
+	}
 	 
 	function onFail(message) {
         
@@ -2139,6 +2162,15 @@ function hideTRIcons(){
 		document.getElementById('CategoryTrRoleID').style.display="block";		
 	}else{
 		document.getElementById('CategoryTrRoleID').style.display="none";
+	}
+}
+
+			
+function hideBusinessExpense(){
+	if(window.localStorage.getItem("mobileEC") == "true"){
+		document.getElementById('businessExpenseTab').style.display="block";		
+	}else{
+		document.getElementById('businessExpenseTab').style.display="none";
 	}
 }
 
@@ -3215,3 +3247,5 @@ function populateMainPage(){
     
          j('#loading').hide();
      }
+
+
