@@ -1125,10 +1125,12 @@ function resetUserSessionDetails(){
      window.localStorage.removeItem("EaInMobile");
      window.localStorage.removeItem("multiLangInMobile");
      window.localStorage.removeItem("localLanguage");
+     window.localStorage.removeItem("mobileEC");
 	 dropAllTableDetails();
 }
 
 function setUserSessionDetails(val,userJSON){
+	//alert("buss : "+val.mobileEC);
 	 window.localStorage.setItem("TrRole",val.TrRole);
 	 window.localStorage.setItem("EmployeeId",val.EmpId);
 	 window.localStorage.setItem("FirstName",val.FirstName);
@@ -1136,6 +1138,7 @@ function setUserSessionDetails(val,userJSON){
 	 window.localStorage.setItem("GradeID",val.GradeID);
 	 window.localStorage.setItem("BudgetingStatus",val.BudgetingStatus);
 	 window.localStorage.setItem("UnitId",val.UnitId);
+	 //window.localStorage.setItem("mobileEC",val.mobileEC);
 	 //For Mobile Google Map Role Start
 	 //End
      if(!val.hasOwnProperty('MobileMapRole')){
@@ -1158,6 +1161,11 @@ function setUserSessionDetails(val,userJSON){
     window.localStorage.setItem("multiLangInMobile",false);
     }else{
      window.localStorage.setItem("multiLangInMobile",val.multiLangInMobile); 
+    } 
+    if(!val.hasOwnProperty('mobileEC')){
+      window.localStorage.setItem("mobileEC",true);
+    }else{
+     window.localStorage.setItem("mobileEC",val.mobileEC); 
     } 
     //End
 	 window.localStorage.setItem("UserName",userJSON["user"]);
@@ -1289,6 +1297,7 @@ function saveWalletAttachment(status){
 	alert("Exception in saveWalletAttachment : "+e);
 }
 }
+
 
 
 function getExpenseNamesfromDB(accountHeadId){
@@ -2456,3 +2465,23 @@ function synchronizeWhiteListMasterData() {
 			});
    appPageHistory.push(pageRef);
 	}
+
+
+       function onSuccessBE(imageData) {
+        try{
+         setTimeout(function(){ 
+        
+        smallImageBE.style.display = 'block'; 
+        document.getElementById('imageBE').setAttribute('src', "data:image/jpeg;base64," + imageData);
+        smallImageBE.src = "data:image/jpeg;base64," + imageData;
+         fileTempGalleryBE = "data:image/jpeg;base64," + imageData;
+         fileTempCameraBE ="";
+          }, 3000);            
+          }catch(e){
+            alert("Error gallery : "+e);
+          }
+        }
+
+        function onFail(message) {
+    alert('Failed because: ' + message);
+}
