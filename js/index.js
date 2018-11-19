@@ -41,7 +41,6 @@ function login()
    {
    	if(document.getElementById("userName")!=null){
     var userName = document.getElementById("userName");
-    alert("!!!!!!!!!"+userName)
 	}else if(document.getElementById("userName")!=null){
 		var userName = document.getElementById("userNameId");
 	}
@@ -1663,7 +1662,7 @@ function validateTSDetails(exp_date,exp_narration,exp_unit,exp_amt,travelRequest
             alert(window.lang.translate('Amount is invalid'));
 			return false;
 		}
-		
+
 	if(currency_id == "-1"){
         alert(window.lang.translate('Currency Name is invalid.'));
 		return false;
@@ -1970,30 +1969,6 @@ function oprationONTravelSettlementExp(){
                 destinationType=navigator.camera.DestinationType;
             }
 	
-	function onPhotoDataSuccess(imageData) {
-
-       resetImageData();
-       if(voucherType == 'wallet'){
-       	smallImageWallet.style.display = 'block'; 
-        //document.getElementById('imageWallet').files[0] = "data:image/jpeg;base64," + imageData;
-        document.getElementById('imageWallet').setAttribute('src', "data:image/jpeg;base64," + imageData);
-		smallImageWallet.src = "data:image/jpeg;base64," + imageData;
-		if(camerastatus=='1')
-		{
-		saveWalletAttachment(0);	
-		}
-       }else if(voucherType == 'BE'){
-       	smallImageBE.style.display = 'block'; 
-        fileTempCameraBE = "data:image/jpeg;base64," + imageData;
-		smallImageBE.src = "data:image/jpeg;base64," + imageData;
-		fileTempGalleryBE ="";
-       }else if(voucherType == 'TS'){
-       	smallImageTS.style.display = 'block';       
-        fileTempCameraTS = "data:image/jpeg;base64," + imageData;
-		smallImageTS.src = "data:image/jpeg;base64," + imageData;
-		fileTempGalleryTS ="";
-       }
-    }
 
 function resetImageData(){
 	fileTempCameraBE = "";
@@ -2010,6 +1985,31 @@ function resetImageData(){
 		camerastatus = status;
 		
 	}
+
+		function onPhotoDataSuccess(imageData) {
+       resetImageData();
+       if(voucherType == 'wallet'){
+       	smallImageWallet.style.display = 'block'; 
+        //document.getElementById('imageWallet').files[0] = "data:image/jpeg;base64," + imageData;
+        document.getElementById('imageWallet').setAttribute('src', "data:image/jpeg;base64," + imageData);
+		smallImageWallet.src = "data:image/jpeg;base64," + imageData;
+
+		if(camerastatus=='1')
+		{
+		saveWalletAttachment(0);	
+		}
+       }else if(voucherType == 'BE'){
+       	smallImageBE.style.display = 'block'; 
+        fileTempCameraBE = "data:image/jpeg;base64," + imageData;
+		smallImageBE.src = "data:image/jpeg;base64," + imageData;
+		fileTempGalleryBE ="";
+       }else if(voucherType == 'TS'){
+       	smallImageTS.style.display = 'block';       
+        fileTempCameraTS = "data:image/jpeg;base64," + imageData;
+		smallImageTS.src = "data:image/jpeg;base64," + imageData;
+		fileTempGalleryTS ="";
+       }
+    }
 	 
 	function onFail(message) {
         
