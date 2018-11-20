@@ -1,14 +1,14 @@
 <script type="text/javascript">
-    var lang = new Lang();
-    lang.dynamic('th', 'js/langpack/th.json');
+		var lang = new Lang();
+		lang.dynamic('th', 'js/langpack/th.json');
         lang.dynamic('ru','js/langpack/russian.json');
         lang.dynamic('ae','js/langpack/arabic.json');
         lang.dynamic('tamil','js/langpack/tamil.json');
         lang.dynamic('hindi','js/langpack/hindi.json');
         lang.dynamic('ka','js/langpack/kannada.json');
-    lang.init({
-      defaultLang: 'en'
-    });
+		lang.init({
+			defaultLang: 'en'
+		});
 </script>
 <br>
 <div class="modal-body clearfix" style=" background-color: white; height: -webkit-fill-available;">
@@ -18,12 +18,12 @@
             <h1 lang="en">My Receipts Wallet</h1>
       </div>
       <div>
-    <div style="text-align:center;">
+	  <div style="text-align:center;">
           <div lang="en" >
-      Add to My Receipts Wallet
+		  Add to My Receipts Wallet
             <img src="images/camera.png" onclick="capturePhoto(1,'wallet');" width="15%" height="15%" >
             <img src="images/gallery.png" id='but_select'  width="15%" height="15%" >
-           <img style="display:none;width:35%;height:80px;align:right;" id="smallImageWallet" src="" />
+			     <img style="display:none;width:35%;height:80px;align:right;" id="smallImageWallet" src="" />
             <input style="display:none;" type="file" id="imageWallet" />
           </div>
           </div>
@@ -33,11 +33,11 @@
     <div  style="display:none" id="loading_Cat" >
                <img src="images/loading2.gif" id="loading-image_Cat" alt="Loading..." >
     </div>
-  <div lang="en"  style="display:none" id="wallet_msg" class="displaywalletmsg"> 
+	<div lang="en"  style="display:none" id="wallet_msg" class="displaywalletmsg"> 
             
     </div>
 </div>
-  
+	
   </div>
 <script>
       fetchWalletImage(); 
