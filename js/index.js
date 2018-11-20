@@ -1654,19 +1654,16 @@ function validateTSDetails(exp_date,exp_narration,exp_unit,exp_amt,travelRequest
 			return false;
 		}
 	if(exp_amt != ""){
-			if(isOnlyNumeric(exp_amt,"Amount")==false)
+			if(isNumber_optionalDot(exp_amt,"Amount")==false)
 			{
 				return false;
 			}
-			if(isZero(exp_amt,"Amount")==false)
-			{
-				document.getElementById("expAmt").value="";
-				return false;
-			}
+			
 		}else{
-            alert(window.lang.translate('Amount is invalid.'));
+            alert(window.lang.translate('Amount is invalid'));
 			return false;
 		}
+	
 	if(currency_id == "-1"){
         alert(window.lang.translate('Currency Name is invalid.'));
 		return false;
