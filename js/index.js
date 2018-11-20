@@ -67,19 +67,19 @@ function login()
 
 
          	
-         	alert('only data : ' + JSON.stringify(data));
+         	//alert('only data : ' + JSON.stringify(data));
          	try{
 
 
 
 
-         		alert('status : ' + data.Status);
+         		//alert('status : ' + data.Status);
          	if (data.Status == 'Success'){
-                alert('sucess data : ' + JSON.stringify(data));
+                //alert('sucess data : ' + JSON.stringify(data));
                 console.log('data : ' + JSON.stringify(data));
                 if(data.hasOwnProperty('multiLangInMobile') && data.multiLangInMobile != null &&
                    data.multiLangInMobile){
-                   	alert('multiLangInMobile');
+                   	//alert('multiLangInMobile');
                        	var headerBackBtn=defaultPagePath+'withoutBckBtn.html';
 	                    var pageRef=defaultPagePath+'language.html';
                     j('#mainHeader').load(headerBackBtn);
@@ -89,7 +89,7 @@ function login()
 			        setUserSessionDetails(data,jsonToBeSend);
                     j('#loading').hide();         
         }else{
-        	alert('not multiLangInMobile');
+        	//alert('not multiLangInMobile');
             var headerBackBtn=defaultPagePath+'categoryMsgPage.html';
 	        var pageRef=defaultPagePath+'category.html';
         	 j('#mainHeader').load(headerBackBtn);
@@ -148,7 +148,7 @@ function login()
 }
  
 function commanLogin(){
-	alert('first 123');
+	//alert('first 123');
  	var userName = document.getElementById("userName");
  	var userNameValue = userName.value; 
  	var domainName = userNameValue.split('@')[1];
