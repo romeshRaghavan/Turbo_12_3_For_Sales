@@ -264,6 +264,7 @@
 	  <script>
     onloadTravelSettleData();
      j("#travelRequestName").change(function() {
+	     resetDatepicker();
       getExpenseNamesOnRequestNoChange();
       getStartandEndOnRequestNoChange();
 	  getCurrencyOnRequestNoChange();
@@ -285,6 +286,13 @@
 		return false;
 	}
   }
+		  
+	function resetDatepicker(){
+     $('#expDate').attr('readonly',true)
+       .datepicker("destroy");
+     $('#expDate').val("");
+  }	  
+		  
 	  </script>  
 </div>
     <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-2">
