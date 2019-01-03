@@ -99,7 +99,6 @@
     <icon gap:platform="ios" height="114" src="res/icon/ios/icon-57-2x.png" width="114" />
     <icon gap:platform="ios" height="144" src="res/icon/ios/icon-72-2x.png" width="144" />
     <icon gap:platform="ios" height="1024" src="res/icon/ios/icon-1024.png" width="1024" />
-    <icon gap:platform="webos" src="www/res/icon/webos/icon-64.png" />
     <gap:splash gap:platform="android" gap:qualifier="port-ldpi" src="www/res/screen/android/screen-ldpi-portrait.png" />
     <gap:splash gap:platform="android" gap:qualifier="port-mdpi" src="www/res/screen/android/screen-mdpi-portrait.png" />
     <gap:splash gap:platform="android" gap:qualifier="port-hdpi" src="www/res/screen/android/screen-hdpi-portrait.png" />
