@@ -1126,6 +1126,7 @@ function resetUserSessionDetails(){
      window.localStorage.removeItem("multiLangInMobile");
      window.localStorage.removeItem("localLanguage");
      window.localStorage.removeItem("mobileEC");
+     window.localStorage.removeItem("MapProvider");
 	 dropAllTableDetails();
 }
 
@@ -1166,7 +1167,12 @@ function setUserSessionDetails(val,userJSON){
       window.localStorage.setItem("mobileEC",true);
     }else{
      window.localStorage.setItem("mobileEC",val.mobileEC); 
-    } 
+    }
+    if(!val.hasOwnProperty('MapProvider')){
+      window.localStorage.setItem("MapProvider","MAPMYINDIA");
+    }else{
+     window.localStorage.setItem("MapProvider",val.MapProvider); 
+    }  
     //End
 	 window.localStorage.setItem("UserName",userJSON["user"]);
 	 window.localStorage.setItem("Password",userJSON["pass"]);
