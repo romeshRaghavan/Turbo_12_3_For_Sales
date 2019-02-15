@@ -2330,7 +2330,7 @@ console.log("url :  "+tempurl);
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "https://cors-anywhere.herokuapp.com/https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915",
+  "url": "https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915",
   "method": "GET",
   "headers": {
   "authorization": authorization,
