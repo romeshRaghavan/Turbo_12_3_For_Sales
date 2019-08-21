@@ -1,14 +1,16 @@
  <script type="text/javascript">
-		var lang = new Lang();
-		lang.dynamic('th', 'js/langpack/th.json');
+        var lang = new Lang();
+        lang.dynamic('th', 'js/langpack/th.json');
         lang.dynamic('ru','js/langpack/russian.json');
         lang.dynamic('ae','js/langpack/arabic.json');
         lang.dynamic('tamil','js/langpack/tamil.json');
         lang.dynamic('hindi','js/langpack/hindi.json');
         lang.dynamic('ka','js/langpack/kannada.json');
-		lang.init({
-			defaultLang: 'en'
-		});
+        lang.dynamic('sd','js/langpack/swidish.json');
+        lang.dynamic('vt','js/langpack/vietnam.json');
+        lang.init({
+            defaultLang: 'en'
+        });
         var smsWatchFlag=window.localStorage.getItem("smsWatchStatus");
         var smartClaimsRole=window.localStorage.getItem("smartClaimsViaSMSOnMobile");
          if(smartClaimsRole){
@@ -18,13 +20,13 @@
         }
 </script>
  <script>
- 	hideTRIcons();
-    hideSmartClaims();
+    hideTRIcons();
     hideBusinessExpense();
+    //hideSmartClaims();
  </script>
 
 <body style="padding:0px; margin:0px; background-color:#fff;font-family:'Open Sans',sans-serif,arial,helvetica,verdana">
-
+   
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
 
@@ -53,9 +55,8 @@
 
             var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
 
-            /*responsive code begin*/
-            /*you can remove responsive code if you don't want the slider scales while window resizing*/
             function ScaleSlider() {
+                if(jssor_1_slider.$Elmt.parentNode.clientWidth != null){
                 var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
                 if (refSize) {
                     refSize = Math.min(refSize, 1920);
@@ -64,6 +65,7 @@
                 else {
                     window.setTimeout(ScaleSlider, 30);
                 }
+              }
             }
             ScaleSlider();
             $(window).bind("load", ScaleSlider);
@@ -72,62 +74,175 @@
             /*responsive code end*/
         });
     </script>
-    <style>
-        /* jssor slider bullet navigator skin 05 css */
-        /*
-        .jssorb05 div           (normal)
-        .jssorb05 div:hover     (normal mouseover)
-        .jssorb05 .av           (active)
-        .jssorb05 .av:hover     (active mouseover)
-        .jssorb05 .dn           (mousedown)
-        */
-        .jssorb05 {
-            position: absolute;
-        }
-        .jssorb05 div, .jssorb05 div:hover, .jssorb05 .av {
-            position: absolute;
-            /* size of bullet elment */
-            width: 16px;
-            height: 16px;
-            background: url('img/b05.png') no-repeat;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        .jssorb05 div { background-position: -7px -7px; }
-        .jssorb05 div:hover, .jssorb05 .av:hover { background-position: -37px -7px; }
-        .jssorb05 .av { background-position: -67px -7px; }
-        .jssorb05 .dn, .jssorb05 .dn:hover { background-position: -97px -7px; }
+    <script>
+        var kebab = document.querySelector('.kebab'),
+    middle = document.querySelector('.middle'),
+    cross = document.querySelector('.cross'),
+    viewPastVoucherDropdown = document.querySelector('.viewPastVoucherDropdown');
 
-        /* jssor slider arrow navigator skin 22 css */
-        /*
-        .jssora22l                  (normal)
-        .jssora22r                  (normal)
-        .jssora22l:hover            (normal mouseover)
-        .jssora22r:hover            (normal mouseover)
-        .jssora22l.jssora22ldn      (mousedown)
-        .jssora22r.jssora22rdn      (mousedown)
-        .jssora22l.jssora22lds      (disabled)
-        .jssora22r.jssora22rds      (disabled)
-        */
-        .jssora22l, .jssora22r {
-            display: block;
-            position: absolute;
-            /* size of arrow element */
-            width: 40px;
-            height: 58px;
-            cursor: pointer;
-            background: url('img/a22.png') center center no-repeat;
-            overflow: hidden;
-        }
-        .jssora22l { background-position: -10px -31px; }
-        .jssora22r { background-position: -70px -31px; }
-        .jssora22l:hover { background-position: -130px -31px; }
-        .jssora22r:hover { background-position: -190px -31px; }
-        .jssora22l.jssora22ldn { background-position: -250px -31px; }
-        .jssora22r.jssora22rdn { background-position: -310px -31px; }
-        .jssora22l.jssora22lds { background-position: -10px -31px; opacity: .3; pointer-events: none; }
-        .jssora22r.jssora22rds { background-position: -70px -31px; opacity: .3; pointer-events: none; }
-    </style>
+/*kebab.addEventListener('click', function() {
+  middle.classList.toggle('active');
+  cross.classList.toggle('active');
+  viewPastVoucherDropdown.classList.toggle('active');
+});
+*/
+    </script>
+
+    <style>
+
+.kebab {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 16px;
+    top: 20px;
+}
+
+.kebab figure {
+    width: 6px;
+    height: 6px;
+    border-radius: 5px;
+    background: #00bcd4;
+    margin: 3px 0;
+}
+
+.middle {
+    transition: all 0.25s cubic-bezier(0.72, 1.2, 0.71, 0.72);
+    transform: scale(1);
+    position: relative;
+    box-shadow: 0 0.1px 0.1px 0 rgba(0, 0, 0, 0.16), 0 0.1px 0.3px 0 rgba(0, 0, 0, 0.12);
+    -webkit-filter: blur(0.1px);
+    filter: blur(0.1px);
+}
+.cross {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    margin-top: -1px;
+    font-family: "Nunito", sans-serif;
+    color: white;
+    transition: all 0.2s cubic-bezier(0.72, 1.2, 0.71, 0.72);
+    font-size: 22px;
+    -moz-user-select: none;
+}
+
+.viewPastVoucherDropdown {
+    position: absolute;
+    right: 0;
+    top: 3em;
+    transition: all 0.25s ease-out;
+    transform: scale(0);
+    transform-origin: 100% 0;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.12);
+}
+
+.viewPastVoucherDropdown li {
+
+    display: block;
+    width: 100%;
+
+}
+
+.viewPastVoucherDropdown.active {
+    transform: scale(1);
+    transition: all 0.25s cubic-bezier(0.5, 1.8, 0.9, 0.8);
+    background: powderblue;
+    z-index: 999;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.12);
+}
+
+.cross.active {
+    transform: translate(-50%, -50%) scale(1);
+    transition: all 0.15s cubic-bezier(0.32, 2.04, 0.85, 0.54);
+}
+
+.middle.active {
+    transform: scale(4.5);
+    transition: all 0.25s cubic-bezier(0.32, 2.04, 0.85, 0.54);
+    box-shadow: 0 0.1px 0.1px 0 rgba(0, 0, 0, 0.16), 0 0.1px 0.3px 0 rgba(0, 0, 0, 0.12);
+}
+
+.viewPastVoucherDropdown li a {
+    width: 100%;
+    padding: 1em 18px;
+    display: inline-block;
+    white-space: pre;
+    box-sizing: border-box;
+}
+
+.viewPastVoucherDropdown a, li {
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.notification {
+  color: white;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.notification .badge {
+    position: absolute;
+    top: 8px;
+    left: 163px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+}
+
+.badge {
+    padding: 4px 6px;
+    font-size: 15px;
+     position: absolute;
+    top: 8px;
+    left: 163px;
+    border-radius: 50%;
+    background-color: #0f97b2;
+    color: white;
+}
+
+.jssorb05 {
+    position: absolute;
+    display: none;
+}
+.jssorb05 div, .jssorb05 div:hover, .jssorb05 .av {
+    position: absolute;
+    /* size of bullet elment */
+    width: 16px;
+    height: 16px;
+    background: url('img/b05.png') no-repeat;
+    overflow: hidden;
+    cursor: pointer;
+}
+.jssorb05 div { background-position: -7px -7px; }
+.jssorb05 div:hover, .jssorb05 .av:hover { background-position: -37px -7px; }
+.jssorb05 .av { background-position: -67px -7px; }
+.jssorb05 .dn, .jssorb05 .dn:hover { background-position: -97px -7px; }
+
+.jssora22l, .jssora22r {
+    display: block;
+    position: absolute;
+    /* size of arrow element */
+    width: 40px;
+    height: 58px;
+    cursor: pointer;
+    background: url('img/a22.png') center center no-repeat;
+    overflow: hidden;
+}
+
+.jssora22l { background-position: -10px -31px; }
+.jssora22r { background-position: -70px -31px; }
+.jssora22l:hover { background-position: -130px -31px; }
+.jssora22r:hover { background-position: -190px -31px; }
+.jssora22l.jssora22ldn { background-position: -250px -31px; }
+.jssora22r.jssora22rdn { background-position: -310px -31px; }
+.jssora22l.jssora22lds { background-position: -10px -31px; opacity: .3; pointer-events: none; }
+.jssora22r.jssora22rds { background-position: -70px -31px; opacity: .3; pointer-events: none; }
+</style>
   <div id="jssor_1" style="position:inherit;margin:0 auto;top:5px;left:0px;width:1200px;height:577px;overflow:hidden;visibility:hidden;">
         <!-- Loading Screen -->
         <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -135,11 +250,7 @@
             <div style="position:absolute;display:block;background:url('img/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
         </div>
         <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1300px;height:500px;overflow:hidden;">
-
-            <div data-p="225.00">
-                <img data-u="image" src="img/red.png" />
-            </div>
-
+            <div data-p="225.00"></div>
         </div>
         <!-- Bullet Navigator -->
         <div data-u="navigator" class="jssorb05" style="bottom:5px;right:5px;" data-autocenter="1">
@@ -152,22 +263,45 @@
     </div>
     <div class="col-md-6 accordions">
          <section class="ac-container">
-               <div id="businessExpenseTab">
-				<label lang="en"onclick="createBusiExpMain();">Business Expense</label>
-				</div>
-				<div id="CategoryTrRoleID">
-				<label  lang="en" onclick="createTravelMain();" style="background: #8fae51 url(images/ar-n.png) no-repeat right;" for="ac-2">Travel Management</label>
-                </div>
-				<div>
-               <label lang="en" onclick="createWallet();" style="background: #8775a7 url(images/ar-n.png) no-repeat right;" for="ac-2">My Receipts Wallet</label>
-				</div>
-             <div id="smartClaimsID">
-               <label lang="en" onclick="viewMessages();" style="background: #b75353 url(images/ar-n.png) no-repeat right;" for="ac-2">Smart Expenses</label>
-                </div>
+           <div  class="allcats">
+                  <div onclick="pastVoucherViews()" class="kebab" style="float:right;">
+                    <figure></figure>
+                    <figure class="middle"></figure>
+                    <!-- <p class="cross">x</p> -->
+                    <figure></figure>
+                    <!-- <ul class="viewPastVoucherDropdown">
+                      <li><a onclick="viewVoucherHeaders('V');">View Past Vouchers</a></li>
+                    </ul> -->
+                  </div>
+                </ul>
+                <span class="claimicon"><i class="fa fa-money" aria-hidden="true"></i></span>
+                <label lang="en" onclick="createBusiExpMain();" style="width:90%;">
+                    Claim Expense
+                    <h5>Add Expense Claims, Request Advance</h5>
+                </label>
+            </div>
+            <div id="CategoryTrRoleID" class="allcats">
+                <span class="claimicon"><i class="fa fa-plane" aria-hidden="true"></i>
+                </span>
+                <label  lang="en" onclick="createTravelMain();" style="" for="ac-2">
+                    Travel Management
+                    <h5>Add Travel Requests, Travel Settelments </h5>
+                </label>
+            </div>
+            <div id="approver" class="allcats" >
+                <span class="claimicon"><i class="fa fa-check-square" style="font-size: 30px;color: darkcyan;" aria-hidden="true"></i>
+                </span>
+                <label lang="en" onclick="viewVoucherHeaders('A');" style="" for="ac-2">
+                    My Approval 
+                    <span class="badge" id="count"></span>
+                    <h5>Approve / Reject Claims</h5>
+                </label>
+            </div>
+            
          </section>
     </div>
-<br>
-    <!-- #endregion Jssor Slider End -->
-   <!--  <center><a><p style="color: #19CFEF;font: caption;"> <b lang="en" onclick="showHelpMenu()">Help</b></p></a></center>-->
 </body>
 
+<script type="text/javascript">
+    fetchCountForMyApproval('A');
+</script>

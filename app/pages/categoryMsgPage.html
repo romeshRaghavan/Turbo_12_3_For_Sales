@@ -1,42 +1,95 @@
 <script>
-var headerValue=headerMsg;
-document.getElementById("headerId").innerHTML = headerValue;
-//hideTRMenus();
-//hideEAMenus(); 
-hideMultilanguage();
+    var headerValue = headerMsg;
+    document.getElementById("headerId").innerHTML = headerValue;
+    //hideTRMenus();
+    //hideEAMenus(); 
+    hideMultilanguage();
 </script>
 <script type="text/javascript">
-		var lang = new Lang();
-		lang.dynamic('th', 'js/langpack/th.json');
-        lang.dynamic('ru','js/langpack/russian.json');
-        lang.dynamic('ae','js/langpack/arabic.json');
-        lang.dynamic('tamil','js/langpack/tamil.json');
-        lang.dynamic('hindi','js/langpack/hindi.json');
-        lang.dynamic('ka','js/langpack/kannada.json');
-		lang.init({
-			defaultLang: 'en'
-		});
+    var lang = new Lang();
+    lang.dynamic('th', 'js/langpack/th.json');
+    lang.dynamic('ru', 'js/langpack/russian.json');
+    lang.dynamic('ae', 'js/langpack/arabic.json');
+    lang.dynamic('tamil', 'js/langpack/tamil.json');
+    lang.dynamic('hindi', 'js/langpack/hindi.json');
+    lang.dynamic('ka', 'js/langpack/kannada.json');
+    lang.dynamic('sd', 'js/langpack/swidish.json');
+    lang.dynamic('vt', 'js/langpack/vietnam.json');
+
+    lang.init({
+        defaultLang: 'en'
+    });
 </script>
-<div class="topfixednavigate" >
-<img class="expenzingMainImg" src="images/Expenzing_Square.png"/>
-        <center><H4 id="headerId" class="headerposition"></H4></center>
-<spen id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a lang="en" href="#" onclick="showSyncMaster()" >Sync Masters</a>
-  <a href="#" id='multiLang' onclick="showMultiLanguag()" lang="en">Settings</a>
-  <!--<a lang="en"  href="#" onclick="showHelpMenu()">Help</a>-->
-</spen>
+<style>
 
-<span style="font-size:30px;cursor:pointer;position: absolute;left: auto;top: inherit;right: inherit;padding-right: 16px;padding-top: 10px;" align="right" onclick="openNav();"><img src="css/cssimages/nav-icon.png" width="30px" height="25px"/></span>
-    
-    
+</style>
+<div class="topfixednavigate">
+    <img class="expenzingMainImg" src="images/Expenzing_Square.png" />
+    <center>
+        <H4 id="headerId" class="headerposition"></H4>
+    </center>
 
-		<div lang="en" style="display:none" id="syncSuccessMsg" class="displaysynctext">
-               Expenses synchronized successfully.
-  		</div>
-		<div lang="en" style="display:none" id="syncFailureMsg" class="displaysynctext">
-               Expenses not synchronized successfully.
-  		</div>
+    <div id="mySidenav" class="sidenav" style="background-color: #eeeeee; box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.16);">
+        <div class="container-fluid">
+            <i class="fa fa-times" href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="font-size:x-large;float: right;color:black;"></i>
+        </div>
+        <a href="#" lang="en" style="border-bottom: 1px solid lightgrey;">
+            <img src = "images/profilepic.jpg" id = "sideNavProfilePreview" height="20%" width="20%" style="border-radius: 35px;">
+            <span id="empName" style="font-size:20px;margin-left:10px;"></span>
+        </a>
+        <a href="#" style="margin-top:15px;" onclick="showProfile()" lang="en"><i class="fa fa-user-circle-o" style="margin-right: 10px;font-size: large;"></i>
+        <span>Profile</span>
+      </a>
+        <a lang="en" href="#" onclick="showSyncMaster()">
+            <i class="fa fa-skyatlas" style="margin-right: 10px;font-size: large;"></i>
+            <span>Sync Masters</span>
+        </a>
+        <a href="#" id='multiLang' onclick="showMultiLanguag()" lang="en">
+            <i class="fa fa-cogs" style="margin-right: 10px;font-size: large;"></i>
+            <span>Languages</span>
+        </a>
+        <a href="#" onclick="showAboutPage()" lang="en">
+            <i class="fa fa-info-circle" style="margin-right: 10px;font-size: large;"></i>
+            <span>About</span>
+        </a>
+<!--         <a href="#" onclick="" lang="en">
+            <i class="fa fa-comments-o" style="margin-right: 10px;font-size: large;"></i>
+            <span>Feedback</span>
+        </a> -->
+        <a href="#" onclick="logOut()" lang="en">
+            <i class="fa fa-sign-out" style="margin-right: 10px;font-size: large;"></i>
+            <span>Log Out</span>
+        </a>
+<!--         <div class="footer">
+            <p>&copy; Copyright 2019. Expenzing (Nexstep Infotech Pvt. Ltd.)</p>
+        </div> -->
+    </div>
+
+    <div class="dropdown">
+        <span class="toprightmenu dropdown-toggle" data-toggle="dropdown" align="right">
+      <i onclick="openNav()" class="fa fa-bars" aria-hidden="true"></i>
+    </span>
+    </div>
+    <div lang="en" style="display:none" id="syncSuccessMsg" class="displaysynctext">
+        Expenses synchronized successfully.
+    </div>
+    <div lang="en" style="display:none" id="syncFailureMsg" class="displaysynctext">
+        Expenses not synchronized successfully.
+    </div>
 </div>
 
->
+<script>
+    findProfileImagedata();
+
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "200px";
+    }
+
+    function closeNav() {
+        if (document.getElementById("mySidenav") != null) {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    }
+
+    document.getElementById("empName").innerHTML = window.localStorage.getItem("FirstName") + " " + window.localStorage.getItem("LastName");
+</script>
