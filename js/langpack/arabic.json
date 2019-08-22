@@ -163,7 +163,10 @@
         "Web Compatibility Version":"نسخة توافق الويب",
         "Voucher Details":"تفاصيل القسيمة",
         "Approve":"يوافق",
-        "Send Back":"إرسال العودة"
+        "Send Back":"إرسال العودة",
+        "First Name":"الاسم الاول",
+        "Last Name":"الكنية",
+        "User Name":"اسم المستخدم"
         
 	},
 	"regex": [

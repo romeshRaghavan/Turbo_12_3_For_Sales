@@ -164,7 +164,10 @@
         "Web Compatibility Version":"Webkompatibilitetsversion",
         "Voucher Details":"Voucher-detaljer",
         "Approve":"Godkänna",
-        "Send Back":"Skicka tillbaka"
+        "Send Back":"Skicka tillbaka",
+        "First Name":"Förnamn",
+		"Last Name":"Efternamn",
+		"User Name":"Användarnamn"
 	},
 	"regex": [
 		["Enter your user name","Skriv in ditt användarnamn"],
