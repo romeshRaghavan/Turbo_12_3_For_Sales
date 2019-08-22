@@ -167,7 +167,8 @@
         "Send Back":"Skicka tillbaka",
         "First Name":"Förnamn",
 		"Last Name":"Efternamn",
-		"User Name":"Användarnamn"
+		"User Name":"Användarnamn",
+		 "Add Expense Claims":"Lägg till kostnadskrav"
 	},
 	"regex": [
 		["Enter your user name","Skriv in ditt användarnamn"],
