@@ -195,14 +195,13 @@
 }
 
 .badge {
-    padding: 4px 6px;
+    padding: 10px 13px;
     font-size: 15px;
-     position: absolute;
     top: 8px;
-    left: 163px;
     border-radius: 50%;
     background-color: #0f97b2;
     color: white;
+    float: right;
 }
 
 .jssorb05 {
@@ -277,7 +276,7 @@
                 <span class="claimicon"><i class="fa fa-money" aria-hidden="true"></i></span>
                 <label lang="en" onclick="createBusiExpMain();" style="width:90%;">
                     Claim Expense
-                    <h5>Add Expense Claims, Request Advance</h5>
+                    <h5 lang="en">Add Expense Claims</h5>
                 </label>
             </div>
             <div id="CategoryTrRoleID" class="allcats">
@@ -285,7 +284,7 @@
                 </span>
                 <label  lang="en" onclick="createTravelMain();" style="" for="ac-2">
                     Travel Management
-                    <h5>Add Travel Requests, Travel Settelments </h5>
+                    <h5 lang="en">Add Travel Requests, Travel Settelments </h5>
                 </label>
             </div>
             <div id="approver" class="allcats" >
@@ -293,8 +292,8 @@
                 </span>
                 <label lang="en" onclick="viewVoucherHeaders('A');" style="" for="ac-2">
                     My Approval 
-                    <span class="badge" id="count"></span>
-                    <h5>Approve / Reject Claims</h5>
+                    <div class="badge" id="count" style="margin-top: 5px;"></div>
+                    <h5 lang="en">Approve / Reject Claims</h5>
                 </label>
             </div>
             
