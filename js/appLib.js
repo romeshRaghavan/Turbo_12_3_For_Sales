@@ -72,6 +72,13 @@
                      j('#mainHeader').load(headerBackBtn);
                  } else if (pg == "app/pages/category.html") {
                      j('#mainHeader').load(headerCatMsg);
+                 }else if (pg == "app/pages/businessExpenseEditPage.html") {
+                     var result = arrayRemove(appPageHistory, "app/pages/businessExpenseEditPage.html");
+                     var lenTemp = result.length;
+                     pg = result[lenTemp - 1];
+                     appPageHistory.pop();
+                     j('#mainHeader').load(headerCatMsg);
+                     j('#mainContainer').load(pg);
                  }
                  if (!(pg == null)) {
                      j('#mainContainer').load(pg);
@@ -79,6 +86,15 @@
          }
      }
  }
+ 
+//Method added for Removing element from array
+function arrayRemove(arr, value) {
+
+   return arr.filter(function(ele){
+       return ele != value;
+   });
+
+}
 
  function goBackEvent() {
      var currentUser = getUserID();
@@ -883,6 +899,7 @@
              success: function(data) {
                  if (data.Status == 'Success') {
                      var currencyArray = data.CurrencyArray;
+
                      mydb.transaction(function(t) {
                          t.executeSql("DELETE FROM currencyMst");
                          if (currencyArray != null && currencyArray.length > 0) {
@@ -4814,40 +4831,15 @@
  function displayPastVoucherPage(statusOfVoucher) {
 
      if (statusOfVoucher == "SUCCESS_NO_DATA") {
-/*         resetImageData();
-         var headerBackBtn = defaultPagePath + 'backbtnPage.html';
-         var pageRef = defaultPagePath + 'viewApproverPastVouchers.html';
-         appPageHistory.push(pageRef);*/
 
-
-
-/*         j(document).ready(function() {
-             j('#mainHeader').load(headerBackBtn);
-             j('#mainContainer').load(pageRef, function() {*/
               var data = "<div style='text-align: center;'>"
                          +"<p  style='text-align: center;'><img src = 'images/noVoucher1.png'></p>"
                          +"<h4><b style='color: darkgrey;'>No expense available.</b></h4>"
                          +"<div>";
               j("#voucherHeader").append(data);
-            
-/*            });
-         });*/
 
      } else {
-/*         resetImageData();
-         var headerBackBtn = defaultPagePath + 'backbtnPage.html';
-         var pageRef = defaultPagePath + 'viewApproverPastVouchers.html';
-         appPageHistory.push(pageRef);*/
-
-         console.log("appPageHistory2 : "+appPageHistory);
-
-/*         j(document).ready(function() {
-             j('#mainHeader').load(headerBackBtn);
-             j('#mainContainer').load(pageRef, function() {*/
                 fetchViewForVouchersHeader();
-/*            });
-         });*/
-
      }
 
  }
@@ -4858,31 +4850,19 @@
         requestRunning = false;
 
          j(document).ready(function() {
-/*             j('#mainHeader').load(headerBackBtn);
-             j('#mainContainer').load(pageRef, function() {*/
+
                var data = "<div style='text-align: center;'>"
                          +"<p  style='text-align: center;'><img src = 'images/noVoucher1.png'></p>"
                          +"<h4><b style='color: darkgrey;'>No expense available.</b></h4>"
                          +"<div>";
               j("#voucherHeader").append(data);
-/*              appPageHistory.push(pageRef);
-            });*/
+
          });
 
      } else {
          requestRunning = false;
          resetImageData();
-/*         var headerBackBtn = defaultPagePath + 'backbtnPage.html';
-         var pageRef = defaultPagePath + 'viewApproverVouchers.html';
-         j(document).ready(function() {
-             j('#mainHeader').load(headerBackBtn);
-             j('#mainContainer').load(pageRef, function() {*/
-                         
                          fetchViewForVouchersHeader();
-/*                         appPageHistory.push(pageRef);
-             });
-         });*/
-
      }
  }
 
@@ -5315,12 +5295,10 @@ function rejectVoucher(){
     var headerBackBtn = defaultPagePath + 'backbtnPage.html';
     var pageRefSuccess = defaultPagePath + 'success.html';
     var busExpHeaderId = j("#RejectedBtn").data('id');
-    //alert("rejectVoucher id"+busExpHeaderId);
     var comment = j.trim(j("#sendBackComment").val());
 
     if(comment != ""){
-        // Show alert dialog if value is not blank
-        //alert(comment);
+
         var jsonToBeSendForApproval = new Object();
         jsonToBeSendForApproval["processId"] = '1';
         jsonToBeSendForApproval["headerList"] = busExpHeaderId;
@@ -5328,7 +5306,7 @@ function rejectVoucher(){
         jsonToBeSendForApproval["buttonStatus"] = "R";
         jsonToBeSendForApproval["rejectionComment"] = comment;
          
-        //console.log(JSON.stringify(jsonToBeSendForApproval));
+        j('#loading_Cat').show();
 
         j.ajax({
             url: window.localStorage.getItem("urlPath") + "MobileApproveRejectService",
@@ -5339,7 +5317,7 @@ function rejectVoucher(){
             success: function(data) {
                 //console.log("data.Status : "+JSON.stringify(data));
                 if (data.Status == "Success") {
-
+                    j('#loading_Cat').hide();
                     var claimExpArray = data.expenseDetails;
 
                     mydb.transaction(function(t) {
@@ -5358,17 +5336,17 @@ function rejectVoucher(){
                     });
 
                     requestRunning = false;
-                    j('#loading_Cat').hide();
                     j('#mainHeader').load(headerBackBtn);
                     j('#mainContainer').load(pageRefSuccess);
 
                 } else {
+                     j('#loading_Cat').hide();
                     successMessage = "Error: Oops something is wrong, Please Contact System Administer";
                     requestRunning = false;
                 }
             },
             error: function(data) {
-                //alert("data")
+                 j('#loading_Cat').hide();
                 requestRunning = false;
             }
         });
@@ -5387,8 +5365,8 @@ function rejectVoucher(){
     jsonToBeSendForApproval["employeeId"] = window.localStorage.getItem("EmployeeId");
     jsonToBeSendForApproval["buttonStatus"] = "A";
     jsonToBeSendForApproval["rejectionComment"] = "";
+
      
-    //console.log(JSON.stringify(jsonToBeSendForApproval));
     j('#loading_Cat').show();
 
     j.ajax({
