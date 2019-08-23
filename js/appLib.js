@@ -5394,14 +5394,15 @@ function rejectVoucher(){
 
                             }
                         }
+
+                        if(successMessage != null && successMessage != ""){
+                            j('#loading_Cat').hide();
+                            j('#mainHeader').load(headerBackBtn);
+                            j('#mainContainer').load(pageRefSuccess);
+                        }
                         requestRunning = false;             
                     });
-
-                requestRunning = false;
-                j('#loading_Cat').hide();
-                j('#mainHeader').load(headerBackBtn);
-                j('#mainContainer').load(pageRefSuccess);
-
+                    
              } else {
                  j('#loading_Cat').hide();
                  successMessage = "Error: Oops something is wrong, Please Contact System Administer";
@@ -5416,6 +5417,7 @@ function rejectVoucher(){
      });
 
  }
+ 
  
  // ************************************** Approve Reject Voucher End ************************************************ //
 
