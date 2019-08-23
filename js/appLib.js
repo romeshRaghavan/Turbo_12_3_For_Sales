@@ -5725,6 +5725,7 @@ function getPrimaryExpenseIdSB(expMstId) {
         jsonBeDetail["amount"] = exp_amt;
         jsonBeDetail["currencyId"] = currency_id;
         jsonBeDetail["businessExpDetId"] = busExpDetailId;
+        jsonBeDetail["imageAttach"] = file;
 
         var pageRefSuccess = defaultPagePath + 'success.html';
         var pageRefFailure = defaultPagePath + 'failure.html';
