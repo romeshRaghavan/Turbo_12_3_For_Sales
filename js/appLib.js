@@ -5530,7 +5530,7 @@ function rejectVoucher(){
      document.getElementById("expToLoc").value = jsonFindBEEditValues.toLocation;
 
      getPerUnitFromDBForEdit(jsonFindBEEditValues.expenseId);
-
+     resetImageData();
     if(jsonFindBEEditValues.attachFileId != "" && jsonFindBEEditValues.attachFileId != null){
 
             setAttachOnLoadSB(jsonFindBEEditValues.attachFileId);
