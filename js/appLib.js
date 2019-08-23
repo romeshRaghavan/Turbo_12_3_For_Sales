@@ -86,8 +86,8 @@
          }
      }
  }
- 
-//Method added for Removing element from array
+
+ //Method added for Removing element from array
 function arrayRemove(arr, value) {
 
    return arr.filter(function(ele){
@@ -95,6 +95,7 @@ function arrayRemove(arr, value) {
    });
 
 }
+
 
  function goBackEvent() {
      var currentUser = getUserID();
@@ -5376,7 +5377,7 @@ function rejectVoucher(){
          crossDomain: true,
          data: JSON.stringify(jsonToBeSendForApproval),
          success: function(data) {
-            //console.log("data.Status : "+JSON.stringify(data));
+
              if (data.Status == "Success") {
                 j('#loading_Cat').hide();
                 var claimExpArray = data.expenseDetails;
@@ -5409,6 +5410,7 @@ function rejectVoucher(){
          },
          error: function(data) {
             j('#loading_Cat').hide();
+            successMessage = "Error: Oops something is wrong, Please Contact System Administer";
             requestRunning = false;
          }
      });
