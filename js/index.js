@@ -3,9 +3,9 @@ var defaultPagePath = 'app/pages/';
 var headerMsg = "Expenzing";
 //var urlPath = 'http://1.255.255.36:13130/TnEV1_0AWeb/WebService/Login/'
 //var WebServicePath ='http://1.255.255.99:8681/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.95:8080/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath = 'http://1.255.255.98:8083/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath = 'http://1.255.255.98:8083/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -137,8 +137,8 @@ function commanLogin() {
     var domainName = userNameValue.split('@')[1];
     var jsonToDomainNameSend = new Object();
     jsonToDomainNameSend["userName"] = domainName;
-    jsonToDomainNameSend["mobilePlatform"] = device.platform;
-    //jsonToDomainNameSend["mobilePlatform"] = "Android";
+    //jsonToDomainNameSend["mobilePlatform"] = device.platform;
+    jsonToDomainNameSend["mobilePlatform"] = "Android";
     jsonToDomainNameSend["appType"] = "NEXGEN_EXPENZING_TNE_APP";
     //var res=JSON.stringify(jsonToDomainNameSend);
     var requestPath = WebServicePath;
@@ -790,7 +790,7 @@ function validateExpenseDetails(exp_date, exp_from_loc, exp_to_loc, exp_narratio
         return false;
     }
     if (acc_head_id == "-1") {
-        alert(window.lang.translate('Account Head is invalid'));
+        alert(window.lang.translate('Expense Type is invalid'));
         return false;
     }
     if (exp_name_id == "-1") {
@@ -1223,7 +1223,7 @@ function validatetravelDetails(travel_purpose_id, account_head_id, from_id, to_i
         return false;
     }
     if (account_head_id == "-1") {
-        alert(window.lang.translate('Account Head is invalid'));
+        alert(window.lang.translate('Expense Type is invalid'));
         return false;
     }
     if (from_id == "-1") {
@@ -1885,7 +1885,7 @@ function oprationOnExpenseClaim() {
 
                         } else {
                             if (exceptionMessage == '') {
-                                exceptionMessage = "Selected expenses should be mapped under Single Expense Type/Account Head."
+                                exceptionMessage = "Selected expenses should be mapped under Single Expense Type."
                                     // j('#displayError').children('span').text(exceptionMessage);
                                     // j('#displayError').hide().fadeIn('slow').delay(3000).fadeOut('slow');
                                 requestRunning = false;
@@ -3127,7 +3127,7 @@ function submitBEWithEA() {
 
             } else {
                 if (exceptionMessage == '') {
-                    exceptionMessage = "Selected expenses should be mapped under Single Expense Type/Account Head."
+                    exceptionMessage = "Selected expenses should be mapped under Single Expense Type."
                         //j('#displayError').children('span').text(exceptionMessage);
                         //j('#displayError').hide().fadeIn('slow').delay(3000).fadeOut('slow');
                         // j('#displayError').children('span').text("Selected expenses should be mapped under Single Expense Type/Account Head.");

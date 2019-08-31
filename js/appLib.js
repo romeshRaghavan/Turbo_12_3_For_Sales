@@ -990,7 +990,7 @@ function arrayRemove(arr, value) {
 
                  } else {
 
-                     document.getElementById("syncFailureMsg").innerHTML = "Account Head Not synchronized Successfully.";
+                     document.getElementById("syncFailureMsg").innerHTML = "Expense Type not synchronized Successfully.";
                      j('#syncFailureMsg').hide().fadeIn('slow').delay(300).fadeOut('slow');
                  }
              },
@@ -3913,7 +3913,7 @@ function arrayRemove(arr, value) {
              text: 'name'
          },
          minimumResultsForSearch: -1,
-         placeholder: 'Select Account Head',
+         placeholder: 'Select Expense Type',
          /*initSelection: function (element, callback) {
             callback(jsonArr[1]);
             getExpenseNamesBasedOnAccountHead(jsonArr[1]);
@@ -4869,6 +4869,7 @@ function arrayRemove(arr, value) {
 
  function fetchViewForVouchersHeader() {
      var statusForEdit = "";
+     var pendingAt = "";
      mydb.transaction(function(t) {
          t.executeSql('SELECT * FROM BEHeader;', [],
              function(transaction, result) {
@@ -4885,7 +4886,13 @@ function arrayRemove(arr, value) {
                              statusForEdit = 'Paid';
                          }  else if (row.vocherStatus == 'U') {
                              statusForEdit = 'Unpaid';
+                             pendingAt = 'Payment Desk'
                          }
+
+                        if(pendingAt == ""){
+                            pendingAt = row.currentOwnerName;
+                        }
+
 
                          var data =
                              "<div class='col-md-12' onclick='fetchViewForVoucherDetails(" + row.busExpHeaderId + ");'>" 
@@ -4898,7 +4905,7 @@ function arrayRemove(arr, value) {
                              + "<label style='margin-left: -5px;'>" + row.accHeadDesc + "</label>" 
                              + "<span style='margin-left:15px;'>" 
                              + "<i class='fa fa-user'></i>" 
-                             + "<label>&nbsp;" + window.localStorage.getItem('FirstName') 
+                             + "<label>&nbsp;" +pendingAt 
                              + "</label>" + "</span>" + "<span style='margin-left:25px;'>" 
                              + "<i class='fa fa-money'></i>" + "<label>&nbsp;" + row.editorTotalAmt + "</label>" 
                              + "</span>" + "</div>" + "</div>" + "<div class='card-footer'>" 
@@ -5048,7 +5055,7 @@ function arrayRemove(arr, value) {
 
  function setHeaderToDetail(busExpHeaderId, voucherDetailArray, detailBodyLines) {
      var statusForEdit = "";
-
+     var pendingAt = "";
      mydb.transaction(function(t) {
 
          t.executeSql('SELECT * FROM BEHeader where busExpHeaderId = ' + busExpHeaderId, [],
@@ -5066,14 +5073,21 @@ function arrayRemove(arr, value) {
                              statusForEdit = 'Paid';
                          }  else if (row.vocherStatus == 'U') {
                              statusForEdit = 'Unpaid';
+                             pendingAt = 'Payment Desk'
                          }
+
+                          if(pendingAt == ""){
+                            pendingAt = row.currentOwnerName;
+                        }
+
 
                          var buttonValue = "";
 
                          var data =
                              "<div class='col-md-12'>" + "<div class='card shadow'>" + "<div class='card-header' style='font-size: 15px;color: #076473;'>" + row.busExpNumber + "<label style = 'color:darkorange;float: right;'>" + statusForEdit + "</label></div>"
 
-                         +"<div class='card-body'>" + "<div style='display: inline-flex;'>" + "<label style='margin-left: -5px;'>" + row.accHeadDesc + "</label>" + "<span style='margin-left:15px;'>" + "<i class='fa fa-user'></i>" + "<label>&nbsp;" + window.localStorage.getItem('FirstName') + "</label>" + "</span>" + "<span style='margin-left:25px;'>" + "<i class='fa fa-money'></i>" + "<label>&nbsp;" + row.editorTotalAmt + "</label>" + "</span>" + "</div>" + "</div>" + "<div class='card-footer' id = 'buttonsAttached' style='padding-bottom:20px;'>" + "<span style='width: 25%;display: contents;'>" + "<i class='fa fa-calendar' aria-hidden='true' style='margin-left: 5px;'></i>" + "<label><h5 style='padding-bottom: 10%;'>&nbsp;" + row.startDate + ' - ' + row.endDate + "</h5></label>"
+                         +"<div class='card-body'>" + "<div style='display: inline-flex;'>" + "<label style='margin-left: -5px;'>" + row.accHeadDesc + "</label>" + "<span style='margin-left:15px;'>" + "<i class='fa fa-user'></i>" 
+                         + "<label>&nbsp;" + pendingAt + "</label>" + "</span>" + "<span style='margin-left:25px;'>" + "<i class='fa fa-money'></i>" + "<label>&nbsp;" + row.editorTotalAmt + "</label>" + "</span>" + "</div>" + "</div>" + "<div class='card-footer' id = 'buttonsAttached' style='padding-bottom:20px;'>" + "<span style='width: 25%;display: contents;'>" + "<i class='fa fa-calendar' aria-hidden='true' style='margin-left: 5px;'></i>" + "<label><h5 style='padding-bottom: 10%;'>&nbsp;" + row.startDate + ' - ' + row.endDate + "</h5></label>"
 
                          + "</span>"
 
@@ -5530,7 +5544,9 @@ function rejectVoucher(){
      document.getElementById("expToLoc").value = jsonFindBEEditValues.toLocation;
 
      getPerUnitFromDBForEdit(jsonFindBEEditValues.expenseId);
+
      resetImageData();
+
     if(jsonFindBEEditValues.attachFileId != "" && jsonFindBEEditValues.attachFileId != null){
 
             setAttachOnLoadSB(jsonFindBEEditValues.attachFileId);
@@ -5727,7 +5743,7 @@ function getPrimaryExpenseIdSB(expMstId) {
         jsonBeDetail["businessExpDetId"] = busExpDetailId;
         var data = file.replace(/data:image\/(png|jpg|jpeg);base64,/, '');
         jsonBeDetail["imageAttach"] = data;
-        
+
         var pageRefSuccess = defaultPagePath + 'success.html';
         var pageRefFailure = defaultPagePath + 'failure.html';
         //console.log("updateDetailLine : " + JSON.stringify(jsonBeDetail));
