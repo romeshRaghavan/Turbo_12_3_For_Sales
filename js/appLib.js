@@ -4899,15 +4899,16 @@ function arrayRemove(arr, value) {
                              + "<div class='card shadow'>" 
                              + "<div class='card-header' style='font-size: 15px;color: #076473;'>" 
                              + row.busExpNumber 
+                             +"<h7 style='display: inline;'>&nbsp("+defaultCurrency+")</h7>"
                              + "<label style = 'color:darkorange;float: right;'>" + statusForEdit + "</label></div>" 
                              + "<div class='card-body'>" 
                              + "<div style='display: inline-flex;'>" 
-                             + "<label style='margin-left: -5px;'>" + row.accHeadDesc + "</label>" 
+                             + "<label>" + row.accHeadDesc + "</label>" 
                              + "<span style='margin-left:15px;'>" 
                              + "<i class='fa fa-user'></i>" 
                              + "<label>&nbsp;" +pendingAt 
                              + "</label>" + "</span>" + "<span style='margin-left:25px;'>" 
-                             + "<i class='fa fa-money'></i>" + "<label>&nbsp;" + row.editorTotalAmt + "<h6>"+defaultCurrency+"</h6></label>" 
+                             + "<i class='fa fa-money'></i>" + "<label>&nbsp;" + row.editorTotalAmt + "</label>" 
                              + "</span>" + "</div>" + "</div>" + "<div class='card-footer'>" 
                              + "<span style='width: 25%;display: contents;'>" 
                              + "<i class='fa fa-calendar' aria-hidden='true' style='margin-left: 5px;'></i>" 
@@ -5085,10 +5086,25 @@ function arrayRemove(arr, value) {
                          var defaultCurrency  = window.localStorage.getItem("DefaultCurrencyName");
 
                          var data =
-                             "<div class='col-md-12'>" + "<div class='card shadow'>" + "<div class='card-header' style='font-size: 15px;color: #076473;'>" + row.busExpNumber + "<label style = 'color:darkorange;float: right;'>" + statusForEdit + "</label></div>"
+                             "<div class='col-md-12'>" 
+                             + "<div class='card shadow'>" 
+                             + "<div class='card-header' style='font-size: 15px;color: #076473;'>" 
+                             + row.busExpNumber 
+                             +"<h7 style='display: inline;'>&nbsp("+defaultCurrency+")</h7>"
+                             +"<label style = 'color:darkorange;float: right;'>" + statusForEdit + "</label></div>"
 
                          +"<div class='card-body'>" + "<div style='display: inline-flex;'>" + "<label style='margin-left: -5px;'>" + row.accHeadDesc + "</label>" + "<span style='margin-left:15px;'>" + "<i class='fa fa-user'></i>" 
-                         + "<label>&nbsp;" + pendingAt + "</label>" + "</span>" + "<span style='margin-left:25px;'>" + "<i class='fa fa-money'></i>" + "<label>&nbsp;" + row.editorTotalAmt + "<h6>"+defaultCurrency+"</h6></label>" + "</span>" + "</div>" + "</div>" + "<div class='card-footer' id = 'buttonsAttached' style='padding-bottom:20px;'>" + "<span style='width: 25%;display: contents;'>" + "<i class='fa fa-calendar' aria-hidden='true' style='margin-left: 5px;'></i>" + "<label><h5 style='padding-bottom: 10%;'>&nbsp;" + row.startDate + ' - ' + row.endDate + "</h5></label>"
+                         + "<label>&nbsp;" + pendingAt + "</label>" + "</span>" 
+                         + "<span style='margin-left:25px;'>" 
+                         + "<i class='fa fa-money'></i>" 
+                         + "<label>&nbsp;" + row.editorTotalAmt +"</label>" 
+                         + "</span>" 
+                         + "</div>" 
+                         + "</div>" 
+                         + "<div class='card-footer' id = 'buttonsAttached' style='padding-bottom:20px;'>" 
+                         + "<span style='width: 25%;display: contents;'>" 
+                         + "<i class='fa fa-calendar' aria-hidden='true' style='margin-left: 5px;'></i>" 
+                         + "<label><h5 style='padding-bottom: 10%;'>&nbsp;" + row.startDate + ' - ' + row.endDate + "</h5></label>"
 
                          + "</span>"
 
