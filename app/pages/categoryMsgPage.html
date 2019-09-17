@@ -23,16 +23,20 @@
 </script>
 <style>
 
-   
-    small {
-        font-size: 80%
-    }
- 
-    hr {
-        box-sizing: content-box;
-        height: 0;
-        overflow: visible
-    }
+   .w3-animate-left {
+    position:relative;
+    animation:animateleft 0.4s; }
+@keyframes animateleft {
+from { 
+    left:-300px;
+    opacity:0;
+} to
+{
+    left:0;
+    opacity:1;
+}
+}
+
    
     .w3-btn,
     .w3-button {
@@ -46,22 +50,22 @@
         background-color: inherit;
         text-align: center;
         cursor: pointer;
-        white-space: nowrap
+        white-space: nowrap;
     }
    
     .w3-ul {
         list-style-type: none;
         padding: 0;
-        margin: 0
+        margin: 0;
     }
    
     .w3-ul li {
         padding: 8px 16px;
-        border-bottom: 1px solid #ddd
+        border-bottom: 1px solid #ddd;
     }
    
     .w3-ul li:last-child {
-        border-bottom: none
+        border-bottom: none;
     }
    
     .w3-sidebar {
@@ -69,7 +73,7 @@
         width: 250px;
         background-color: #f2f2f2;
         position: fixed!important;
-        overflow: auto
+        overflow: auto;
     }
     
     .fa {
@@ -84,16 +88,16 @@
         border: none;
         white-space: normal;
         float: none;
-        outline: 0
+        outline: 0;
     }
    
     .w3-bar-block.w3-center .w3-bar-item {
-        text-align: center
+        text-align: center;
     }
    
     .w3-block {
         display: block;
-        width: 100%
+        width: 100%;
     }
    
     .w3-overlay {
@@ -106,77 +110,31 @@
         right: 0;
         bottom: 0;
         background-color: rgba(0, 0, 0, 0.5);
-        z-index: 2
-    }
-   
-    .w3-animate-fading {
-        animation: fading 10s infinite
-    }
-   
-    @keyframes fading {
-        0% {
-            opacity: 0
-        }
-        50% {
-            opacity: 1
-        }
-        100% {
-            opacity: 0
-        }
-    }
-   
-    .w3-animate-opacity {
-        animation: opac 0.8s
-    }
-   
-    @keyframes opac {
-        from {
-            opacity: 0
-        }
-        to {
-            opacity: 1
-        }
-    }
-   
-    .w3-animate-top {
-        position: relative;
-        animation: animatetop 0.4s
-    }
-   
-    @keyframes animatetop {
-        from {
-            top: -300px;
-            opacity: 0
-        }
-        to {
-            top: 0;
-            opacity: 1
-        }
+        z-index: 2;
     }
    
     .w3-opacity,
     .w3-hover-opacity:hover {
-        opacity: 0.60
+        opacity: 0.60;
     }
    
     .w3-opacity-off,
     .w3-hover-opacity-off:hover {
-        opacity: 1
+        opacity: 1;
     }
    
     .w3-opacity-max {
-        opacity: 0.25
+        opacity: 0.25;
     }
    
     .w3-opacity-min {
-        opacity: 0.75
+        opacity: 0.75;
     }
    
-    .w3-bar-block:hover .w3-bar-item:hover {
-    background-color:#b6d8db;
-}
-
-
+    .w3-bar-block:hover
+    .w3-bar-item::hover {
+    background-color: #b6d8db;
+    }
 
 </style>
 
@@ -210,8 +168,6 @@
         </a>
         <a href="#" class="w3-bar-item w3-button" onclick="logOut()"><i class="fa fa-sign-out" aria-hidden="true"></i>
         <label style="margin-left:15px;">Log Out</label></a>
-        
-
     </div>
 
 
@@ -219,7 +175,7 @@
     <div class="w3-overlay w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>
 
     <div>
-        <button class="w3-button w3-white w3-xxlarge" onclick="w3_open()" style="color: #279fb8;">&#9776;</button>
+        <button class="w3-button w3-white" onclick="w3_open()" style="color: #279fb8;">&#9776;</button>
         
     </div>
 

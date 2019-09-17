@@ -37,6 +37,22 @@
 .ac-containerPast label {
     padding: 0px 6px 15px 5px;
 }
+
+.badge {
+    padding: 10px 12px;
+    font-size: 14px;
+    top: 8px;
+    border-radius: 50%;
+    background-color: #0f97b2;
+    color: white;
+    float: right;
+}
+
+.notify {
+    width: 100%;
+}
+
+
 </style>
 
 <body style="padding:0px; margin:0px; background-color:#fff;font-family:'Open Sans',sans-serif,arial,helvetica,verdana">
@@ -47,35 +63,38 @@
             <div id="" class="allcats" style="display: flex;padding: 5px;">
                 <span class="claimicon"><img src="images/pending.png" style="width: 25px;height: 25px;margin-top: 13px;">
                 </span>
-                <label  lang="en" onclick="viewVoucherHeaders('P');" style="padding-top: 15px;" for="ac-2">
+                <label class="notify" lang="en" onclick="viewVoucherHeaders('P');" style="padding-top: 15px;" for="ac-2">
                    Pending Expenses
-                    <h5></h5>
+                    <div class="badge" style="margin-top: -8px;" id="pendingCount" ></div>
                 </label>
             </div>
             <div id="" class="allcats" style="display: flex;padding: 5px;">
                 <span class="claimicon"><img src="images/approved.png" style="width: 25px;height: 25px;margin-top: 13px;">
                 </span>
-                <label  lang="en" onclick="viewVoucherHeaders('U');" style="padding-top: 15px;" for="ac-2">
+                <label class="notify" lang="en" onclick="viewVoucherHeaders('U');" style="padding-top: 15px;" for="ac-2">
                    Approved Unpaid Expenses
-                    <h5></h5>
+                    <div class="badge"  style="margin-top: -8px;" id="approvedUnpaidCount"></div>
                 </label>
             </div>
             <div id="" class="allcats" style="display: flex;padding: 5px;">
                 <span class="claimicon"><img src="images/appPaid.png" style="width: 25px;height: 25px;margin-top: 13px;">
                 </span>
-                <label  lang="en" onclick="viewVoucherHeaders('F');" style="padding-top: 15px;" for="ac-2">
+                <label class="notify" lang="en" onclick="viewVoucherHeaders('F');" style="padding-top: 15px;" for="ac-2">
                    Approved Paid Expenses
-                    <h5></h5>
+                    <div class="badge"  style="margin-top: -8px;" id="approvedPaidCount"></div>
                 </label>
             </div>
             <div id="" class="allcats" style="display: flex;padding: 5px;">
                 <span class="claimicon"><img src="images/sendBack.png" style="width: 25px;height: 25px;margin-left: 2px;margin-top: 15px;">
                 </span>
-                <label  lang="en" onclick="viewVoucherHeaders('R');" style="margin-left: -3px;padding-top: 15px;" for="ac-2">
+                <label class="notify" lang="en" onclick="viewVoucherHeaders('R');" style="padding-top: 15px;" for="ac-2">
                    Send Back Expenses
-                    <h5></h5>
+                   <div class="badge"  style="margin-top: -8px;" id="sendBackCount"></div>
                 </label>
             </div>
        </section>
     </div>
 </body>
+<script type="text/javascript">
+    fetchCountForMyApproval('P');
+</script>
