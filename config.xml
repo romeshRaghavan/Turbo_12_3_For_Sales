@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.tne.expenzingNexgenTnEV12" version="12.0" android-versionCode="102" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.phonegap.tne.expenzingagiletnev12" version="12.1.0" android-versionCode="105" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
 <!--widget id="com.expenzing.expenzing" version="1.1.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0"-->
-    <name>EC Agile Test</name>
+    <name>Expenzing TEM Agile</name>
     <description>
         Expenzing Application
     </description>
@@ -39,7 +39,6 @@
     <gap:plugin name="cordova-plugin-camera" source="npm" />
     <gap:plugin name="cordova-plugin-media-capture" source="npm" />
     <gap:plugin name="cordova-plugin-console" source="npm" />
-
     
 <gap:plugin name="cordova-plugin-contacts" source="npm" />
     <gap:plugin name="cordova-plugin-device" source="npm" />
@@ -57,10 +56,13 @@
     <gap:plugin name="cordova-plugin-vibration" source="npm" />
     <gap:plugin name="cordova-plugin-imagepicker" source="npm"/> -->
     
-    
     <gap:plugin name="cordova-plugin-battery-status" source="npm" />
     <gap:plugin name="cordova-plugin-compat" source="npm" spec="~1.2.0"/>
+    
     <gap:plugin name="cordova-plugin-camera" source="npm" spec="~2.3.0"/>
+    <variable name="CAMERA_USAGE_DESCRIPTION" value="App requires access to the camera" />
+    <variable name="NSPHOTOLIBRARYUSAGEDESCRIPTIONENTRY" value="App requires access to the photo library" />
+    
     <gap:plugin name="cordova-plugin-media-capture" source="npm" />
     <gap:plugin name="cordova-plugin-console" source="npm" />
     <gap:plugin name="cordova-plugin-contacts" source="npm" />
@@ -99,6 +101,7 @@
     <icon gap:platform="ios" height="114" src="res/icon/ios/icon-57-2x.png" width="114" />
     <icon gap:platform="ios" height="144" src="res/icon/ios/icon-72-2x.png" width="144" />
     <icon gap:platform="ios" height="1024" src="res/icon/ios/icon-1024.png" width="1024" />
+    <icon gap:platform="ios" height="40" src="res/icon/ios/icon-40.png" width="40" />
     <gap:splash gap:platform="android" gap:qualifier="port-ldpi" src="www/res/screen/android/screen-ldpi-portrait.png" />
     <gap:splash gap:platform="android" gap:qualifier="port-mdpi" src="www/res/screen/android/screen-mdpi-portrait.png" />
     <gap:splash gap:platform="android" gap:qualifier="port-hdpi" src="www/res/screen/android/screen-hdpi-portrait.png" />
