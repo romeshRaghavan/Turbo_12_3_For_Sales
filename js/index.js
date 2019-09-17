@@ -3,9 +3,9 @@ var defaultPagePath = 'app/pages/';
 var headerMsg = "Expenzing";
 //var urlPath = 'http://1.255.255.36:13130/TnEV1_0AWeb/WebService/Login/'
 //var WebServicePath ='http://1.255.255.99:8681/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.95:8080/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath = 'http://1.255.255.98:8083/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath = 'http://1.255.255.98:8083/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -39,6 +39,8 @@ var toLocationWayPoint = "";
 var profileImg = "";
 var enableDivBasedOnStatus = ""; // For Past Voucher = 'V' and For my Approval = 'A'
 var updateAttachment = ""; // For BE Edit
+var MOBILE_APP_VERSION = "12.1";
+var MOBILE_APP_NAME = "Expenzing TEM Agile";
 
 j(document).ready(function() {
     document.addEventListener("deviceready", loaded, false);
@@ -55,7 +57,11 @@ function login() {
     var jsonToBeSend = new Object();
     jsonToBeSend["user"] = userName.value;
     jsonToBeSend["pass"] = password.value;
+    jsonToBeSend["MOBILE_APP_VERSION"] = MOBILE_APP_VERSION;
+    jsonToBeSend["MOBILE_APP_NAME"] = MOBILE_APP_NAME;
+    
     //setUrlPathLocalStorage(urlPath);
+    console.log("jsonToBeSend : "+JSON.stringify(jsonToBeSend));
     urlPath = window.localStorage.getItem("urlPath");
     j('#loading').show();
     j.ajax({
@@ -3210,9 +3216,9 @@ function callSendForApprovalServiceForBEwithEA(jsonToSaveBE, busExpDetailsArr, e
     }
 }
 
-function openNav() {
+/*function openNav() {
     document.getElementById("mySidenav").style.width = "230px";
-}
+}*/
 
 function closeNav() {
     //document.getElementById("mySidenav").style.width = "0";
@@ -3563,7 +3569,6 @@ function clearDivRequest() {
 //   ****************************************  Business Edit Page -- Start  ******************************** //
 
 function expPrimaryId() {
-//Neha
 
     if (j("#source tr.selected").hasClass("selected")) {
         var rowCount = $("#source tr.selected").length;

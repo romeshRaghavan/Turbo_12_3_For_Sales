@@ -111,5 +111,14 @@ function isNumber_optionalDot(object,messageContent) {
 			alert(window.lang.translate(messageContent+" should be numeric."));
 			return false;
 		}
+		if(object.indexOf(".")>-1 && (object.split('.')[1].length > 2)){
+			 alert(window.lang.translate('Two numbers only allowed after decimal point'));
+
+		var expAmt = object.substr(0,object.length-1);
+
+			  document.getElementById("expAmt").value = expAmt;
+
+			 //return false;
+		}
 		return true;
 }

@@ -181,7 +181,7 @@ function arrayRemove(arr, value) {
 
          // ****************     Approval Table      ***************** //
 
-         t.executeSql("CREATE TABLE IF NOT EXISTS BEHeader ( busExpHeaderId INTEGER ,busExpNumber TEXT,accHeadId INTEGER REFERENCES accountHeadMst(accHeadId),accHeadDesc TEXT,voucherDate DATE,startDate DATE,endDate DATE,currencyId INTEGER REFERENCES currencyMst(currencyId),currencyName TEXT,editorTotalAmt DOUBLE,vocherStatus TEXT, currentOwnerId INTEGER, currentOwnerName TEXT)");
+         t.executeSql("CREATE TABLE IF NOT EXISTS BEHeader ( busExpHeaderId INTEGER ,busExpNumber TEXT,accHeadId INTEGER REFERENCES accountHeadMst(accHeadId),accHeadDesc TEXT,voucherDate DATE,startDate DATE,endDate DATE,currencyId INTEGER REFERENCES currencyMst(currencyId),currencyName TEXT,editorTotalAmt DOUBLE,vocherStatus TEXT, currentOwnerId INTEGER, currentOwnerName TEXT, rejectionComments TEXT)");
          t.executeSql("CREATE TABLE IF NOT EXISTS BEDetails (busExpDetailId INTEGER ,busExpHeaId INTEGER , expNameId INTEGER REFERENCES expNameMst(expNameId), expName  TEXT,expDate DATE,currencyId INTEGER REFERENCES currencyMst(currencyId),currencyName TEXT, perUnit INTEGER,fromLocation TEXT,toLocation TEXT,convertedAmt DOUBLE ,expAttachment BLOB)");
 
      });
@@ -3033,8 +3033,6 @@ function arrayRemove(arr, value) {
      var map = new Map();
      var msg = "";
 
-     console.log("expenses : " + JSON.stringify(expenses));
-
      for (var i = 0; i < expenses.length; i++) {
          //alert("expenses[i].isEntiLineOrVoucherLevel : "+expenses[i].isEntiLineOrVoucherLevel);
 
@@ -4786,8 +4784,9 @@ function arrayRemove(arr, value) {
                                  var vocherStatus = headArray.vocherStatus;
                                  var currentOwnerId = headArray.currentOwnerId;
                                  var currentOwnerName = headArray.currentOwnerName;
+                                 var rejectionComments = headArray.rejectionComments;
 
-                                 t.executeSql("INSERT INTO BEHeader (busExpHeaderId ,busExpNumber ,accHeadId ,accHeadDesc ,voucherDate ,startDate ,endDate ,currencyId ,currencyName ,editorTotalAmt ,vocherStatus , currentOwnerId, currentOwnerName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [busExpHeaderId, busExpNumber, accHeadId, accHeadDesc, voucherDate, startDate, endDate, currencyId, currencyName, editorTotalAmt, vocherStatus, currentOwnerId, currentOwnerName]);
+                                 t.executeSql("INSERT INTO BEHeader (busExpHeaderId ,busExpNumber ,accHeadId ,accHeadDesc ,voucherDate ,startDate ,endDate ,currencyId ,currencyName ,editorTotalAmt ,vocherStatus , currentOwnerId, currentOwnerName, rejectionComments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [busExpHeaderId, busExpNumber, accHeadId, accHeadDesc, voucherDate, startDate, endDate, currencyId, currencyName, editorTotalAmt, vocherStatus, currentOwnerId, currentOwnerName, rejectionComments]);
 
                              }
                          }
@@ -4893,6 +4892,7 @@ function arrayRemove(arr, value) {
                             pendingAt = row.currentOwnerName;
                         }
 
+                         var defaultCurrency  = window.localStorage.getItem("DefaultCurrencyName");
 
                          var data =
                              "<div class='col-md-12' onclick='fetchViewForVoucherDetails(" + row.busExpHeaderId + ");'>" 
@@ -4907,7 +4907,7 @@ function arrayRemove(arr, value) {
                              + "<i class='fa fa-user'></i>" 
                              + "<label>&nbsp;" +pendingAt 
                              + "</label>" + "</span>" + "<span style='margin-left:25px;'>" 
-                             + "<i class='fa fa-money'></i>" + "<label>&nbsp;" + row.editorTotalAmt + "</label>" 
+                             + "<i class='fa fa-money'></i>" + "<label>&nbsp;" + row.editorTotalAmt + "<h6>"+defaultCurrency+"</h6></label>" 
                              + "</span>" + "</div>" + "</div>" + "<div class='card-footer'>" 
                              + "<span style='width: 25%;display: contents;'>" 
                              + "<i class='fa fa-calendar' aria-hidden='true' style='margin-left: 5px;'></i>" 
@@ -4962,7 +4962,6 @@ function arrayRemove(arr, value) {
     var headerBackBtn = defaultPagePath + 'backbtnPage.html';
     var pageRef = defaultPagePath + 'voucherDetails.html';
     
-    console.log("setDetailsForHeader : "+appPageHistory);
 
     if( !appPageHistory.includes('app/pages/voucherDetails.html')){
             appPageHistory.push(pageRef);
@@ -5017,13 +5016,13 @@ function arrayRemove(arr, value) {
 
                      detailBody = "<tr>"+ "<td>" + expName + "</td>" 
                                         + "<td>" + expenseDateForDetail + "</td>" 
-                                        + "<td>" + detailArray.convertedAmt + ' <h6 style=display:inline-block;>'+ detailArray.currencyName + "</h6></span></td>"
+                                        + "<td>" + detailArray.amount + ' <h6 style=display:inline-block;>'+ detailArray.currencyName + "</h6></span></td>"
                                         + attachment
                                         + "<td  class='expDate displayNone'>"+expenseDate+ "</td>"    
                                         + "<td  class='toLocation displayNone'>"+detailArray.toLocation+"</td>"
                                         + "<td  class='fromLocation displayNone'>"+detailArray.fromLocation+"</td>"
                                         + "<td  class='expNarration1 displayNone'>"+narration+"</td>"
-                                        + "<td  class='expAmt1 displayNone'>"+detailArray.convertedAmt+"</td>"
+                                        + "<td  class='expAmt1 displayNone'>"+detailArray.amount+"</td>"
                                         + "<td  class='expNameId displayNone'>"+detailArray.expNameId+"</td>"
                                         + "<td  class='expUnit displayNone'>"+unit+"</td>"
                                         + "<td  class='currencyId displayNone'>"+detailArray.currencyId+"</td>"
@@ -5083,29 +5082,52 @@ function arrayRemove(arr, value) {
 
                          var buttonValue = "";
 
+                         var defaultCurrency  = window.localStorage.getItem("DefaultCurrencyName");
+
                          var data =
                              "<div class='col-md-12'>" + "<div class='card shadow'>" + "<div class='card-header' style='font-size: 15px;color: #076473;'>" + row.busExpNumber + "<label style = 'color:darkorange;float: right;'>" + statusForEdit + "</label></div>"
 
                          +"<div class='card-body'>" + "<div style='display: inline-flex;'>" + "<label style='margin-left: -5px;'>" + row.accHeadDesc + "</label>" + "<span style='margin-left:15px;'>" + "<i class='fa fa-user'></i>" 
-                         + "<label>&nbsp;" + pendingAt + "</label>" + "</span>" + "<span style='margin-left:25px;'>" + "<i class='fa fa-money'></i>" + "<label>&nbsp;" + row.editorTotalAmt + "</label>" + "</span>" + "</div>" + "</div>" + "<div class='card-footer' id = 'buttonsAttached' style='padding-bottom:20px;'>" + "<span style='width: 25%;display: contents;'>" + "<i class='fa fa-calendar' aria-hidden='true' style='margin-left: 5px;'></i>" + "<label><h5 style='padding-bottom: 10%;'>&nbsp;" + row.startDate + ' - ' + row.endDate + "</h5></label>"
+                         + "<label>&nbsp;" + pendingAt + "</label>" + "</span>" + "<span style='margin-left:25px;'>" + "<i class='fa fa-money'></i>" + "<label>&nbsp;" + row.editorTotalAmt + "<h6>"+defaultCurrency+"</h6></label>" + "</span>" + "</div>" + "</div>" + "<div class='card-footer' id = 'buttonsAttached' style='padding-bottom:20px;'>" + "<span style='width: 25%;display: contents;'>" + "<i class='fa fa-calendar' aria-hidden='true' style='margin-left: 5px;'></i>" + "<label><h5 style='padding-bottom: 10%;'>&nbsp;" + row.startDate + ' - ' + row.endDate + "</h5></label>"
 
                          + "</span>"
 
-                         + "<div class='table-responsive'>" + "<table id = 'detailTab' class='table table-bordered tableFixHead' width='100%' cellspacing='0'>" + "<thead>" + "<tr role='row'>" + "<th class='sorting' tabindex='0' aria-controls='dataTable' rowspan='1' colspan='1' aria-label=''>Expense Name" + "</th>" + "<th class='sorting' tabindex='0' aria-controls='dataTable' rowspan='1' colspan='1' aria-label=''>Date" + "</th>" + "<th class='sorting' tabindex='0' aria-controls='dataTable' rowspan='1' colspan='1' aria-label=''>Amount" + "</th>" + "<th class='sorting' tabindex='0' aria-controls='dataTable' rowspan='1' colspan='1' aria-label=''>" + "</th>" + "</tr>" + "</thead>" + "<tbody id='detailBodyId'>" + detailBodyLines + "</tbody>" + "</table>" + "</div>" + "</div>" + "</div>" + "</div>";
+                         + "<div class='table-responsive'>" 
+                         + "<table id = 'detailTab' class='table table-bordered tableFixHead' width='100%' cellspacing='0'>" 
+                         + "<thead>" 
+                         + "<tr role='row'>" 
+                         + "<th class='sorting' tabindex='0' aria-controls='dataTable' rowspan='1' colspan='1' aria-label=''>Expense Name" + "</th>" 
+                         + "<th class='sorting' tabindex='0' aria-controls='dataTable' rowspan='1' colspan='1' aria-label=''>Date" + "</th>" 
+                         + "<th class='sorting' tabindex='0' aria-controls='dataTable' rowspan='1' colspan='1' aria-label=''>Amount" + "</th>" 
+                         + "<th class='sorting' tabindex='0' aria-controls='dataTable' rowspan='1' colspan='1' aria-label=''>" + "</th>" 
+                         + "</tr>" 
+                         + "</thead>" 
+                         + "<tbody id='detailBodyId'>" + detailBodyLines + "</tbody>" 
+                         + "</table>" 
+                         + "</div>" 
+                         + "</div>" 
+                         + "</div>" 
+                         + "</div>";
 
                          j('#voucherDetailsTab').append(data);
 
                          if (statusForEdit == 'Rejected' || statusForEdit == 'Draft') {
 
-                             buttonValue = "<div class='col-md-12' id = 'editButton' style='text-align: center;padding-bottom: 20px;'>" + "<button type='submit' class='btn btn-primary' onclick='expPrimaryIdSB()'>Edit</button>&nbsp;" 
-                                            + "<button type='submit' id = 'sendForApproveBtn' class='btn btn-primary' onclick='approveVoucher(" + row.busExpHeaderId + ")'>Send For Approval</button>&nbsp;" + "</div>";
+                             buttonValue =   
+                                            "<br>"
+                                            +"<div style='margin-left: 2%;'><label>Rejection Comments :</label>"
+                                            +"<br>"
+                                            +"<div style='border: 1px;background-color: #eeeeee;padding: 10px 0 10px 10px;box-sizing: border-box;width: 98%;padding-left: 10;'>"+row.rejectionComments+"</div>"
+                                            +"<div><br>"
+                                            +"<div class='col-md-12' id = 'editButton' style='text-align: center;padding-bottom: 20px;'>" + "<button type='submit' class='btn btn-primary' onclick='expPrimaryIdSB()'>Edit</button>&nbsp;" 
+                                            +"<button type='submit' id = 'sendForApproveBtn' class='btn btn-primary' onclick='approveVoucher(" + row.busExpHeaderId + ")'>Send For Approval</button>&nbsp;" + "</div>";
 
                              j('#buttonsAttached').append(buttonValue);
                          }
                          if(enableDivBasedOnStatus == 'A'){
                              buttonValue =  "<div class='col-md-12' style='text-align: center; padding-bottom: 20px;'>"
                                             +"<button type='submit' id = 'approveBtn' class='btn btn-primary' onclick='approveVoucher("+row.busExpHeaderId+")'>Approve</button>&nbsp;"
-                                             +"<button type='button' id = 'RejectedBtn' class='btn btn-primary' data-toggle='modal' data-id="+row.busExpHeaderId+" data-target='#myModal'>Send Back</button>"
+                                            +"<button type='button' id = 'RejectedBtn' class='btn btn-primary' data-toggle='modal' data-id="+row.busExpHeaderId+" data-target='#myModal'>Send Back</button>"
                                             +"</div>";
 
                              j('#buttonsAttached').append(buttonValue);
@@ -5141,8 +5163,11 @@ function arrayRemove(arr, value) {
      var headerBackBtn = defaultPagePath + 'backbtnPage.html';
      var pageRef = defaultPagePath + 'viewPastVoucher.html';
 
-     j('#mainHeader').load(headerBackBtn);
-     j('#mainContainer').load(pageRef);
+
+     j(document).ready(function() {
+         j('#mainHeader').load(headerBackBtn);
+         j('#mainContainer').load(pageRef);
+     });
      appPageHistory.push(pageRef);
 
  }
@@ -5286,12 +5311,34 @@ function arrayRemove(arr, value) {
          crossDomain: true,
          data: JSON.stringify(jsonSentToSync),
          success: function(data) {
-             console.log("data.Status : " + JSON.stringify(data));
+
              if (data.Status == "Success") {
 
-                 var countForMyApproval = data.VoucherCount;
+                 var countForVouchers = data.VoucherCount.toString();
 
-                 document.getElementById("count").innerHTML = countForMyApproval;
+                if(statusOfVoucher == 'A'){
+                 document.getElementById("count").innerHTML = countForVouchers.match(/\d+/);
+                }else{
+                     var arrayOfCount = countForVouchers.split(",");
+
+                     for(var i = 0 ; i < arrayOfCount.length ; i++){
+
+                        if(arrayOfCount[i].includes("P")){
+                            document.getElementById("pendingCount").innerHTML = arrayOfCount[i].match(/\d+/);
+                        }
+                        if(arrayOfCount[i].includes("U")){
+                            document.getElementById("approvedUnpaidCount").innerHTML = arrayOfCount[i].match(/\d+/);
+                        }
+                         if(arrayOfCount[i].includes("F")){
+                            document.getElementById("approvedPaidCount").innerHTML = arrayOfCount[i].match(/\d+/);
+                        }
+                         if(arrayOfCount[i].includes("R")){
+                            document.getElementById("sendBackCount").innerHTML = arrayOfCount[i].match(/\d+/);
+                        }
+
+                     }
+
+                }
 
                  requestRunning = false;
              } else {
@@ -5330,7 +5377,7 @@ function rejectVoucher(){
             crossDomain: true,
             data: JSON.stringify(jsonToBeSendForApproval),
             success: function(data) {
-                //console.log("data.Status : "+JSON.stringify(data));
+              
                 if (data.Status == "Success") {
                     j('#loading_Cat').hide();
                     var claimExpArray = data.expenseDetails;
