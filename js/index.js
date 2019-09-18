@@ -3637,7 +3637,7 @@ function editBusiExpMain(expPrimaryId) {
 
             localStorage.setItem("jsonFindBE", JSON.stringify(jsonFindBE));
 
-            console.log(JSON.stringify(jsonFindBE));
+            //console.log(JSON.stringify(jsonFindBE));
 
         });
 

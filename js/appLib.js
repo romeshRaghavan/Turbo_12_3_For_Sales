@@ -65,7 +65,7 @@
              appPageHistory.pop();
              var len = appPageHistory.length;
              var pg = appPageHistory[len - 1];
-
+             //console.log("pg : "+pg);
 
                  if (pg == "app/pages/addAnExpense.html" || pg == "app/pages/addTravelSettlement.html") {
 
@@ -74,6 +74,13 @@
                      j('#mainHeader').load(headerCatMsg);
                  }else if (pg == "app/pages/businessExpenseEditPage.html") {
                      var result = arrayRemove(appPageHistory, "app/pages/businessExpenseEditPage.html");
+                     var lenTemp = result.length;
+                     pg = result[lenTemp - 1];
+                     appPageHistory.pop();
+                     j('#mainHeader').load(headerCatMsg);
+                     j('#mainContainer').load(pg);
+                 }else if(pg == "app/pages/voucherDetails.html"){
+                    var result = arrayRemove(appPageHistory, "app/pages/voucherDetails.html");
                      var lenTemp = result.length;
                      pg = result[lenTemp - 1];
                      appPageHistory.pop();
