@@ -61,7 +61,7 @@ function login() {
     jsonToBeSend["MOBILE_APP_NAME"] = MOBILE_APP_NAME;
     
     //setUrlPathLocalStorage(urlPath);
-    console.log("jsonToBeSend : "+JSON.stringify(jsonToBeSend));
+    //console.log("jsonToBeSend : "+JSON.stringify(jsonToBeSend));
     urlPath = window.localStorage.getItem("urlPath");
     j('#loading').show();
     j.ajax({
