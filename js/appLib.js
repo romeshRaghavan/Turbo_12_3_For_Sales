@@ -103,7 +103,6 @@ function arrayRemove(arr, value) {
 
 }
 
-
  function goBackEvent() {
      var currentUser = getUserID();
      var loginPath = defaultPagePath + 'loginPage.html';
@@ -168,7 +167,7 @@ function arrayRemove(arr, value) {
          t.executeSql("CREATE TABLE IF NOT EXISTS walletMst (walletId INTEGER PRIMARY KEY ASC AUTOINCREMENT, walletAttachment  BLOB)");
          t.executeSql("CREATE TABLE IF NOT EXISTS travelModeMst (travelModeId INTEGER PRIMARY KEY ASC, travelModeName TEXT)");
          t.executeSql("CREATE TABLE IF NOT EXISTS travelCategoryMst (travelCategoryId INTEGER PRIMARY KEY ASC, travelCategoryName TEXT,travelModeId INTEGER)");
-         t.executeSql("CREATE TABLE IF NOT EXISTS cityTownMst (cityTownId INTEGER PRIMARY KEY ASC, cityTownName TEXT , stateID INTEGER , domCityTownId INTEGER)");
+         t.executeSql("CREATE TABLE IF NOT EXISTS cityTownMst (cityTownId INTEGER PRIMARY KEY ASC, cityTownName TEXT)");
          t.executeSql("CREATE TABLE IF NOT EXISTS travelTypeMst (travelTypeId INTEGER PRIMARY KEY ASC, travelTypeName TEXT)");
          t.executeSql("CREATE TABLE IF NOT EXISTS travelAccountHeadMst (id INTEGER PRIMARY KEY ASC,accHeadId INTEGER, accHeadName TEXT, processId INTEGER)");
          t.executeSql("CREATE TABLE IF NOT EXISTS travelExpenseNameMst (id INTEGER PRIMARY KEY ASC,expenseNameId INTEGER, expenseName TEXT, isModeCategory char(1),accountCodeId INTEGER,accHeadId INTEGER REFERENCES travelAccountHeadMst(accHeadId))");
@@ -186,7 +185,7 @@ function arrayRemove(arr, value) {
          t.executeSql("CREATE TABLE IF NOT EXISTS perDiemTravelMst (ID INTEGER PRIMARY KEY ASC, companyId INTEGER, gradeId INTEGER, amount INTEGER, domCityTownId INTEGER, expenseHeadId INTEGER, currencyId INTEGER)");
          t.executeSql("CREATE TABLE IF NOT EXISTS profileMst (profileId INTEGER PRIMARY KEY ASC AUTOINCREMENT,empId INTEGER, profileAttachment  BLOB)");
 
-         // ****************     Approval Table      ***************** //
+        // ****************     Approval Table      ***************** //
 
          t.executeSql("CREATE TABLE IF NOT EXISTS BEHeader ( busExpHeaderId INTEGER ,busExpNumber TEXT,accHeadId INTEGER REFERENCES accountHeadMst(accHeadId),accHeadDesc TEXT,voucherDate DATE,startDate DATE,endDate DATE,currencyId INTEGER REFERENCES currencyMst(currencyId),currencyName TEXT,editorTotalAmt DOUBLE,vocherStatus TEXT, currentOwnerId INTEGER, currentOwnerName TEXT, rejectionComments TEXT)");
          t.executeSql("CREATE TABLE IF NOT EXISTS BEDetails (busExpDetailId INTEGER ,busExpHeaId INTEGER , expNameId INTEGER REFERENCES expNameMst(expNameId), expName  TEXT,expDate DATE,currencyId INTEGER REFERENCES currencyMst(currencyId),currencyName TEXT, perUnit INTEGER,fromLocation TEXT,toLocation TEXT,convertedAmt DOUBLE ,expAttachment BLOB)");
@@ -907,7 +906,6 @@ function arrayRemove(arr, value) {
              success: function(data) {
                  if (data.Status == 'Success') {
                      var currencyArray = data.CurrencyArray;
-
                      mydb.transaction(function(t) {
                          t.executeSql("DELETE FROM currencyMst");
                          if (currencyArray != null && currencyArray.length > 0) {
@@ -997,7 +995,7 @@ function arrayRemove(arr, value) {
 
                  } else {
 
-                     document.getElementById("syncFailureMsg").innerHTML = "Expense Type not synchronized Successfully.";
+                     document.getElementById("syncFailureMsg").innerHTML = "Account Head Not synchronized Successfully.";
                      j('#syncFailureMsg').hide().fadeIn('slow').delay(300).fadeOut('slow');
                  }
              },
@@ -1073,17 +1071,13 @@ function arrayRemove(arr, value) {
                      mydb.transaction(function(t) {
                          t.executeSql("DELETE FROM cityTownMst");
                          var cityTownJSONArray = data.CityTownJSONArray;
-
                          if (cityTownJSONArray != null && cityTownJSONArray.length > 0) {
                              for (var i = 0; i < cityTownJSONArray.length; i++) {
                                  var stateArr = new Array();
                                  stateArr = cityTownJSONArray[i];
                                  var citytown_id = stateArr.CityTownId;
                                  var citytown_name = stateArr.CityTownName;
-                                 var stateId = stateArr.StateId;
-                                 var domCityTownId = stateArr.DomCityTownTypeId;
-
-                                 t.executeSql("INSERT INTO cityTownMst (cityTownId,cityTownName,stateId,domCityTownId) VALUES (?, ?, ?, ?)", [citytown_id, citytown_name, stateId, domCityTownId]);
+                                 t.executeSql("INSERT INTO cityTownMst (cityTownId,cityTownName) VALUES (?, ?)", [citytown_id, citytown_name]);
 
                              }
                          }
@@ -1397,9 +1391,9 @@ function arrayRemove(arr, value) {
 
          if (mydb) {
 
-             mydb.transaction(function(t) {
-                 t.executeSql("DELETE FROM profileMst");
-             });
+                      mydb.transaction(function(t) {
+                         t.executeSql("DELETE FROM profileMst");
+                     });
 
              if (val.ProfileImageData != "" && val.ProfileImageData != null) {
                  mydb.transaction(function(t) {
@@ -1449,6 +1443,7 @@ function arrayRemove(arr, value) {
          t.executeSql("delete from smsMaster");
          t.executeSql("delete from smsScrutinizerMst");
          t.executeSql("delete from profileMst");
+         
 
      });
 
@@ -2650,7 +2645,7 @@ function arrayRemove(arr, value) {
                          j("#source tr").on("swipe", swipeHandler);
 
                          function swipeHandler(event) {
-                             //alert("asd");
+                             alert("asd");
                          }
                      });
 
@@ -3862,14 +3857,14 @@ function arrayRemove(arr, value) {
  // *********************************  Business Expense Edit  -- Start ******************************************//
 
  function onloadExpenseElement() {
-     var jsonFindBEEditValues = JSON.parse(window.localStorage.getItem("jsonFindBE"));
-     var accHeadId = jsonFindBEEditValues.accountHeadId;
+    var jsonFindBEEditValues = JSON.parse(window.localStorage.getItem("jsonFindBE"));
+    var accHeadId = jsonFindBEEditValues.accountHeadId;
 
      if (mydb) {
          mydb.transaction(function(t) {
              t.executeSql("SELECT * FROM accountHeadMst", [], getAccHeadListForBEEdit);
              t.executeSql("SELECT * FROM currencyMst", [], getCurrencyListForBEEdit);
-             t.executeSql("SELECT * FROM expNameMst  where accHeadId=" + accHeadId, [], getExpNameListForBEEdit);
+             t.executeSql("SELECT * FROM expNameMst  where accHeadId=" +accHeadId, [], getExpNameListForBEEdit);
          });
      } else {
          alert('Database not found, your browser does not support web sql!');
@@ -3918,7 +3913,7 @@ function arrayRemove(arr, value) {
              text: 'name'
          },
          minimumResultsForSearch: -1,
-         placeholder: 'Select Expense Type',
+         placeholder: 'Select Account Head',
          /*initSelection: function (element, callback) {
             callback(jsonArr[1]);
             getExpenseNamesBasedOnAccountHead(jsonArr[1]);
@@ -3991,7 +3986,9 @@ function arrayRemove(arr, value) {
      }
      createExpNameDropDownForBEEdit(jsonExpNameArr);
 
+
      setEditBEJSON();
+
 
  }
 
@@ -4043,6 +4040,11 @@ function arrayRemove(arr, value) {
          document.getElementById("expUnit").value = jsonFindBEEditValues.units;
      }
 
+ /*    if (document.getElementById("expUnit").value == 'undefined') {
+         document.getElementById("expUnit").value = "";
+         document.getElementById("expUnit").style.display = "none";
+     }*/
+
      document.getElementById("expAmt").value = jsonFindBEEditValues.amount;
 
      j("#expenseName").select2("val", jsonFindBEEditValues.expenseId);
@@ -4055,22 +4057,23 @@ function arrayRemove(arr, value) {
 
      getPerUnitFromDBForEdit(jsonFindBEEditValues.expenseId);
 
-     if (jsonFindBEEditValues.imageAttach != "" && jsonFindBEEditValues.imageAttach != null) {
-         smallImageBE.style.display = 'block';
-         smallImageBE.src = jsonFindBEEditValues.imageAttach;
+        if(jsonFindBEEditValues.imageAttach != "" && jsonFindBEEditValues.imageAttach != null)
+        {
+               smallImageBE.style.display = 'block';
+               smallImageBE.src =  jsonFindBEEditValues.imageAttach;
 
-         if (fileTempCameraBE != "" && fileTempCameraBE != null) {
-             updateAttachment = jsonFindBEEditValues.imageAttach;
-             resetImageData();
-         } else {
-             updateAttachment = jsonFindBEEditValues.imageAttach;
-             resetImageData();
-         }
-     }
-
+               if(fileTempCameraBE != "" && fileTempCameraBE != null){
+                    updateAttachment =  jsonFindBEEditValues.imageAttach;
+                    resetImageData();
+               }else{
+                    updateAttachment =  jsonFindBEEditValues.imageAttach;
+                    resetImageData();
+               }
+        }
+ 
  }
 
- function getPerUnitFromDBForEdit(expenseNameID) {
+  function getPerUnitFromDBForEdit(expenseNameID) {
      j('#errorMsgArea').children('span').text("");
      if (mydb) {
          //Get all the employeeDetails from the database with a select statement, set outputEmployeeDetails as the callback function for the executeSql command
@@ -4084,7 +4087,7 @@ function arrayRemove(arr, value) {
 
  function updateBusinessDetails(busExpDetailId) {
 
-     var acc_head_id;
+         var acc_head_id;
      var acc_head_val;
 
      var exp_name_id;
@@ -4515,35 +4518,13 @@ function arrayRemove(arr, value) {
  }
 
  function calcuteEntitlementForTS(expenseNameId, travelReqID, travelExpenseReqID, travelModeID, travelCategoryID, cityTownID, cityTownName, travelExpenseReqName) {
-     console.log("cityTownId : " + cityTownID);
-     if (mydb) {
-         mydb.transaction(function(t) {
-             t.executeSql("SELECT domCityTownId FROM cityTownMst where cityTownId=" + cityTownID, [],
-                 function(transaction, results) {
 
-                     console.log("results.rows.length : " + results.rows.length);
+     console.log("travelExpenseNameID : " + expenseNameId + "cityTownID : " + cityTownID);
 
-                     for (i = 0; i < results.rows.length; i++) {
-
-                         var row = results.rows.item(i);
-                         console.log("row :" + row.domCityTownId);
-
-                         var domCityTownTypeId = row.domCityTownId;
-
-                         entitlementBasedonGradeAndCityTownType(travelReqID, travelModeID, travelCategoryID, domCityTownTypeId, travelExpenseReqID, expenseNameId, travelExpenseReqName, cityTownName);
-                     }
-                 });
-         });
-     }
-
- }
-
- function entitlementBasedonGradeAndCityTownType(travelReqID, travelModeID, travelCategoryID, domCityTownTypeId, travelExpenseReqID, expenseNameId, travelExpenseReqName, cityTownName) {
-
-     if (validateValuesForEntitlement(travelReqID, travelModeID, travelCategoryID, domCityTownTypeId, travelExpenseReqID)) {
+     if (validateValuesForEntitlement(travelReqID, travelModeID, travelCategoryID, cityTownID, travelExpenseReqID)) {
          if (mydb) {
              mydb.transaction(function(t) {
-                 t.executeSql("Select amount from perDiemTravelMst where domCityTownId = '" + domCityTownTypeId + "' and expenseHeadId ='" + expenseNameId + "'", [],
+                 t.executeSql("Select amount from perDiemTravelMst where domCityTownId = '" + cityTownID + "' and expenseHeadId ='" + expenseNameId + "'", [],
                      function(transaction, results) {
                          for (i = 0; i < results.rows.length; i++) {
 
@@ -4551,9 +4532,6 @@ function arrayRemove(arr, value) {
                              var amount = row.amount;
                              var tsAmount = document.getElementById('expAmt').value;
                              var exceptionMessage = "";
-
-                             console.log("tsAmount : " + tsAmount);
-                             console.log("amount : " + amount);
 
                              if (tsAmount > amount) {
                                  exceptionMessage = "(Exceeding Per Diem Entitlement amount defined: " + amount + " for Expense Head :  " + travelExpenseReqName + " and City/Town : " + cityTownName + ")";
@@ -4569,7 +4547,6 @@ function arrayRemove(arr, value) {
              alert(window.lang.translate('Database not found, your browser does not support web sql!'));
          }
      }
-
  }
 
  function validateValuesForEntitlement(travelReqID, cityTownID, travelExpenseReqID) {
@@ -4590,7 +4567,7 @@ function arrayRemove(arr, value) {
  // *********************************  Travel Settelment Send For Appoval -- Start ******************************************//
  function tripDetails() {
      var travelRequestId = j("#travelRequestName").select2('data').id;
-     //alert("travelRequestId : " + travelRequestId);
+     alert("travelRequestId : " + travelRequestId);
      var jsonToPopulateTRDetails = new Object();
      jsonToPopulateTRDetails["TravelRequestId"] = travelRequestId;
      checkTRDetailsExist(travelRequestId, jsonToPopulateTRDetails);
@@ -4601,7 +4578,7 @@ function arrayRemove(arr, value) {
          mydb.transaction(function(t) {
              t.executeSql("Select * from travelSettleExpDetails where travelRequestId = '" + travelRequestId + "'", [],
                  function(transaction, results) {
-                     //alert("results.rows.length : " + results.rows.length);
+                     alert("results.rows.length : " + results.rows.length);
                      var noOfRows = results.rows.length;
                      if (noOfRows == 0) {
                          populateTravelRequestDetailsAjax(jsonToPopulateTRDetails);
@@ -4618,7 +4595,7 @@ function arrayRemove(arr, value) {
  }
 
  function populateTravelRequestDetailsAjax(jsonToPopulateTRDetails) {
-     //alert("populateTravelRequestDetailsAjax :");
+     alert("populateTravelRequestDetailsAjax :");
      var pageRefSuccess = defaultPagePath + 'success.html';
      var pageRefFailure = defaultPagePath + 'failure.html';
 
@@ -4647,7 +4624,7 @@ function arrayRemove(arr, value) {
 
  function setTRdetailsForSettelment(travelDetailArray) {
 
-     //alert("travel detail : " + JSON.stringify(travelDetailArray));
+     alert("travel detail : " + JSON.stringify(travelDetailArray));
      mydb.transaction(function(t) {
          if (travelDetailArray != null && travelDetailArray.length > 0) {
              for (var i = 0; i < travelDetailArray.length; i++) {
@@ -4697,7 +4674,7 @@ function arrayRemove(arr, value) {
 
                              var row = results.rows.item(i);
 
-                             if (row.profileAttachment != "") {
+                             if (row.profileAttachment != "" ) {
                                  if (document.getElementById("ProfilePreview") != null) {
                                      document.getElementById("ProfilePreview").src = "data:image/png;base64," + row.profileAttachment;
                                  }
@@ -4720,6 +4697,24 @@ function arrayRemove(arr, value) {
  }
 
  //***************************** Profile Image -- End *******************************************************//
+
+ //***************************** Agile Merging -- Start *******************************************************//
+
+
+ function pastVoucherViews() {
+
+     var headerBackBtn = defaultPagePath + 'backbtnPage.html';
+     var pageRef = defaultPagePath + 'viewPastVoucher.html';
+
+
+     j(document).ready(function() {
+         j('#mainHeader').load(headerBackBtn);
+         j('#mainContainer').load(pageRef);
+     });
+     appPageHistory.push(pageRef);
+
+ }
+
 
  // ******************************** View Past Voucher / For My Approval Header -- Start *********************************************//
 
@@ -4885,7 +4880,7 @@ function arrayRemove(arr, value) {
                          var row = result.rows.item(record);
 
                          if (row.vocherStatus == 'R' || row.vocherStatus == 'D') {
-                             statusForEdit = 'Rejected';
+                             statusForEdit = 'Sent Back';
                          } else if (row.vocherStatus == 'P') {
                              statusForEdit = 'Pending';
                          } else if (row.vocherStatus == 'F') {
@@ -4934,6 +4929,61 @@ function arrayRemove(arr, value) {
 
  // ******************************** View Past Voucher  / For My Approval Header -- End *********************************************//
 
+  function fetchCountForMyApproval(statusOfVoucher) {
+
+     var jsonSentToSync = new Object();
+     jsonSentToSync["employeeId"] = window.localStorage.getItem("EmployeeId");
+     jsonSentToSync["processId"] = "1";
+     jsonSentToSync["vocherStatus"] = statusOfVoucher;
+
+     j.ajax({
+         url: window.localStorage.getItem("urlPath") + "FetchCount",
+         type: 'POST',
+         dataType: 'json',
+         crossDomain: true,
+         data: JSON.stringify(jsonSentToSync),
+         success: function(data) {
+
+             if (data.Status == "Success") {
+
+                 var countForVouchers = data.VoucherCount.toString();
+                 
+                if(statusOfVoucher == 'A' && document.getElementById('count') != null){
+                 document.getElementById("count").innerHTML = countForVouchers.match(/\d+/);
+                }else{
+                     var arrayOfCount = countForVouchers.split(",");
+
+                     for(var i = 0 ; i < arrayOfCount.length ; i++){
+
+                        if(arrayOfCount[i].includes("P") && document.getElementById('pendingCount') != null){
+                            document.getElementById("pendingCount").innerHTML = arrayOfCount[i].match(/\d+/);
+                        }
+                        if(arrayOfCount[i].includes("U") && document.getElementById('approvedUnpaidCount') != null){
+                            document.getElementById("approvedUnpaidCount").innerHTML = arrayOfCount[i].match(/\d+/);
+                        }
+                         if(arrayOfCount[i].includes("F") && document.getElementById('approvedPaidCount') != null){
+                            document.getElementById("approvedPaidCount").innerHTML = arrayOfCount[i].match(/\d+/);
+                        }
+                         if(arrayOfCount[i].includes("R") && document.getElementById('sendBackCount') != null){
+                            document.getElementById("sendBackCount").innerHTML = arrayOfCount[i].match(/\d+/);
+                        }
+
+                     }
+
+                }
+
+                 requestRunning = false;
+             } else {
+                 requestRunning = false;
+             }
+         },
+         error: function(data) {
+             requestRunning = false;
+         }
+     });
+
+ }
+
  function fetchViewForVoucherDetails(busExpHeaderId) {
 
      var jsonToPopulateBEDetails = new Object();
@@ -4964,6 +5014,7 @@ function arrayRemove(arr, value) {
      });
 
  }
+
 
  function setDetailsForHeader(busExpHeaderId, voucherDetailArray) {
 
@@ -5053,7 +5104,7 @@ function arrayRemove(arr, value) {
 
  }
 
- function getDateForDetailLine(input) {
+  function getDateForDetailLine(input) {
     // converts date from dd-MMM-yyyy to dd/mm/yyyy
     var date = new Date(input);
 
@@ -5073,7 +5124,7 @@ function arrayRemove(arr, value) {
                          var row = result.rows.item(record);
 
                          if (row.vocherStatus == 'R'|| row.vocherStatus == 'D') {
-                             statusForEdit = 'Rejected';
+                             statusForEdit = 'Sent Back';
                          } else if (row.vocherStatus == 'P') {
                              statusForEdit = 'Pending';
                          } else if (row.vocherStatus == 'F') {
@@ -5134,11 +5185,11 @@ function arrayRemove(arr, value) {
 
                          j('#voucherDetailsTab').append(data);
 
-                         if (statusForEdit == 'Rejected' || statusForEdit == 'Draft') {
+                         if (statusForEdit == 'Sent Back' || statusForEdit == 'Draft') {
 
                              buttonValue =   
                                             "<br>"
-                                            +"<div style='margin-left: 2%;'><label>Rejection Comments :</label>"
+                                            +"<div style='margin-left: 2%;'><label>Sent Back Comments :</label>"
                                             +"<br>"
                                             +"<div style='border: 1px;background-color: #eeeeee;padding: 10px 0 10px 10px;box-sizing: border-box;width: 98%;padding-left: 10;'>"+row.rejectionComments+"</div>"
                                             +"<div><br>"
@@ -5179,203 +5230,7 @@ function arrayRemove(arr, value) {
 
  }
 
- // ************************************** Past View Voucher Category ************************************************ //
-
- function pastVoucherViews() {
-
-     var headerBackBtn = defaultPagePath + 'backbtnPage.html';
-     var pageRef = defaultPagePath + 'viewPastVoucher.html';
-
-
-     j(document).ready(function() {
-         j('#mainHeader').load(headerBackBtn);
-         j('#mainContainer').load(pageRef);
-     });
-     appPageHistory.push(pageRef);
-
- }
-
-
- function updateDetailLine(expPrimaryId){
-
- j(document).ready(function() {
-
-
-    j("#detailTab tr").click(function() {
-                         //headerOprationBtn = defaultPagePath + 'voucherDetails.html';
-                         if (j(this).hasClass("selected")) {
-                             var headerBackBtn = defaultPagePath + 'backbtnPage.html';
-                             j(this).removeClass('selected');
-                             j('#mainHeader').load(headerBackBtn);
-                         } else {
-                                // j('#mainHeader').load(headerOprationBtn);
-                                 j(this).addClass('selected');
-                             
-                         }
-                     });
-
-
-                if (j("#detailTab tr.selected").hasClass("selected")) {
-                    j("#detailTab tr.selected").each(function(index, row) {
-        
-                    var busExpDetailId = j(this).find('td.busExpDetailId').text();
-                    var jsonUpdateBE = new Object();
-                    var expDate = j(this).find('td.expDate').text();
-                    var expenseDate = expDate;
-
-                    jsonUpdateBE["busExpId"] = j(this).find('td.busExpId').text();
-                    jsonUpdateBE["busExpDetailId"] = busExpDetailId;
-                    jsonUpdateBE["expenseDate"] = expenseDate;
-                    
-                    jsonUpdateBE["expenseId"] = expPrimaryId;
-                    jsonUpdateBE["ExpenseName"] = j(this).find('td.expName').text();
-                    jsonUpdateBE["fromLocation"] = j(this).find('td.fromLocation').text();
-                    jsonUpdateBE["toLocation"] = j(this).find('td.toLocation').text();
-
-                    jsonUpdateBE["narration"] = j(this).find('td.expNarration1').text();
-                    jsonUpdateBE["accountHeadId"] = j(this).find('td.accHeadId').text();
-                    jsonUpdateBE["accountCodeId"] = j(this).find('td.accountCodeId').text();
-
-                    if (j(this).find('td.expUnit').text() != "") {
-                        jsonUpdateBE["units"] = j(this).find('td.expUnit').text();
-                    }
-                    jsonUpdateBE["wayPoint"] = j(this).find('td.wayPoint').text();
-                    jsonUpdateBE["amount"] = j(this).find('td.expAmt1').text();
-                    jsonUpdateBE["currencyId"] = j(this).find('td.currencyId').text();
-                    jsonUpdateBE["perUnitException"] = j(this).find('td.isEntitlementExceeded').text();
-
-/*                    var dataURL = j(this).find('td.busAttachment').text();
-                    var attachmentFileId = j(this).find('td.attachFileId').text();
-
-                    //For IOS image save
-                    //var data = dataURL.replace(/data:image\/(png|jpg|jpeg);base64,/, '');
-
-                    //For Android image save
-                    var data = dataURL.replace(/data:base64,/, '');
-
-                    jsonUpdateBE["imageAttach"] = data;*/
-
-                    jsonUpdateBE["attachFileId"] = j(this).find('td.attachFileId').text();
-
-
-                    localStorage.setItem("jsonUpdateBE", JSON.stringify(jsonUpdateBE));
-
-                    //console.log(JSON.stringify(jsonUpdateBE));
-
-                    displayUpdateDetailPage();
-
-                    });
-                } else {
-                    alert(window.lang.translate('Tap and select expense to edit.'));
-                }
-
-      });
- }
-
-
- function displayUpdateDetailPage() {
-
-     var headerBackBtn = defaultPagePath + 'backbtnPage.html';
-     var pageRef = defaultPagePath + 'businessExpenseSendBackEditPage.html';
-     j(document).ready(function() {
-         j('#mainHeader').load(headerBackBtn);
-         j('#mainContainer').load(pageRef);
-     });
-     appPageHistory.push(pageRef);
-
- }
-
- function fetchReceipt(attachFileId) {
-
-     var jsonToBeSendForApproval = new Object();
-     jsonToBeSendForApproval["fileId"] = attachFileId;
-
-     j.ajax({
-         url: window.localStorage.getItem("urlPath") + "FetchAttachment",
-         type: 'POST',
-         dataType: 'json',
-         crossDomain: true,
-         data: JSON.stringify(jsonToBeSendForApproval),
-         success: function(data) {
-             if (data.Status == "Success") {
-
-                 var attachmentData = data.attachmentData;
-
-                 if (document.getElementById("img01") != null) {
-                     document.getElementById("img01").src = "data:image/png;base64," + attachmentData;
-                 }
-
-                 var modal = document.getElementById("myModalImg");
-                 modal.style.display = "block";
-
-                 requestRunning = false;
-             } else {
-                 requestRunning = false;
-             }
-         },
-         error: function(data) {
-             requestRunning = false;
-         }
-     });
-
- }
-
- function fetchCountForMyApproval(statusOfVoucher) {
-
-     var jsonSentToSync = new Object();
-     jsonSentToSync["employeeId"] = window.localStorage.getItem("EmployeeId");
-     jsonSentToSync["processId"] = "1";
-     jsonSentToSync["vocherStatus"] = statusOfVoucher;
-
-     j.ajax({
-         url: window.localStorage.getItem("urlPath") + "FetchCount",
-         type: 'POST',
-         dataType: 'json',
-         crossDomain: true,
-         data: JSON.stringify(jsonSentToSync),
-         success: function(data) {
-
-             if (data.Status == "Success") {
-
-                 var countForVouchers = data.VoucherCount.toString();
-
-                if(statusOfVoucher == 'A'){
-                 document.getElementById("count").innerHTML = countForVouchers.match(/\d+/);
-                }else{
-                     var arrayOfCount = countForVouchers.split(",");
-
-                     for(var i = 0 ; i < arrayOfCount.length ; i++){
-
-                        if(arrayOfCount[i].includes("P")){
-                            document.getElementById("pendingCount").innerHTML = arrayOfCount[i].match(/\d+/);
-                        }
-                        if(arrayOfCount[i].includes("U")){
-                            document.getElementById("approvedUnpaidCount").innerHTML = arrayOfCount[i].match(/\d+/);
-                        }
-                         if(arrayOfCount[i].includes("F")){
-                            document.getElementById("approvedPaidCount").innerHTML = arrayOfCount[i].match(/\d+/);
-                        }
-                         if(arrayOfCount[i].includes("R")){
-                            document.getElementById("sendBackCount").innerHTML = arrayOfCount[i].match(/\d+/);
-                        }
-
-                     }
-
-                }
-
-                 requestRunning = false;
-             } else {
-                 requestRunning = false;
-             }
-         },
-         error: function(data) {
-             requestRunning = false;
-         }
-     });
-
- }
-
- // ************************************** Approve Reject Voucher Start ************************************************ //
+// ************************************** Approve Reject Voucher Start ************************************************ //
 function rejectVoucher(){
     var headerBackBtn = defaultPagePath + 'backbtnPage.html';
     var pageRefSuccess = defaultPagePath + 'success.html';
@@ -5912,3 +5767,128 @@ function getPrimaryExpenseIdSB(expMstId) {
 
 
 // *********************************  Business Expense Edit Send Back Vouchers(SB) -- End ******************************************//
+
+ function updateDetailLine(expPrimaryId){
+
+ j(document).ready(function() {
+
+
+    j("#detailTab tr").click(function() {
+                         //headerOprationBtn = defaultPagePath + 'voucherDetails.html';
+                         if (j(this).hasClass("selected")) {
+                             var headerBackBtn = defaultPagePath + 'backbtnPage.html';
+                             j(this).removeClass('selected');
+                             j('#mainHeader').load(headerBackBtn);
+                         } else {
+                                // j('#mainHeader').load(headerOprationBtn);
+                                 j(this).addClass('selected');
+                             
+                         }
+                     });
+
+
+                if (j("#detailTab tr.selected").hasClass("selected")) {
+                    j("#detailTab tr.selected").each(function(index, row) {
+        
+                    var busExpDetailId = j(this).find('td.busExpDetailId').text();
+                    var jsonUpdateBE = new Object();
+                    var expDate = j(this).find('td.expDate').text();
+                    var expenseDate = expDate;
+
+                    jsonUpdateBE["busExpId"] = j(this).find('td.busExpId').text();
+                    jsonUpdateBE["busExpDetailId"] = busExpDetailId;
+                    jsonUpdateBE["expenseDate"] = expenseDate;
+                    
+                    jsonUpdateBE["expenseId"] = expPrimaryId;
+                    jsonUpdateBE["ExpenseName"] = j(this).find('td.expName').text();
+                    jsonUpdateBE["fromLocation"] = j(this).find('td.fromLocation').text();
+                    jsonUpdateBE["toLocation"] = j(this).find('td.toLocation').text();
+
+                    jsonUpdateBE["narration"] = j(this).find('td.expNarration1').text();
+                    jsonUpdateBE["accountHeadId"] = j(this).find('td.accHeadId').text();
+                    jsonUpdateBE["accountCodeId"] = j(this).find('td.accountCodeId').text();
+
+                    if (j(this).find('td.expUnit').text() != "") {
+                        jsonUpdateBE["units"] = j(this).find('td.expUnit').text();
+                    }
+                    jsonUpdateBE["wayPoint"] = j(this).find('td.wayPoint').text();
+                    jsonUpdateBE["amount"] = j(this).find('td.expAmt1').text();
+                    jsonUpdateBE["currencyId"] = j(this).find('td.currencyId').text();
+                    jsonUpdateBE["perUnitException"] = j(this).find('td.isEntitlementExceeded').text();
+
+/*                    var dataURL = j(this).find('td.busAttachment').text();
+                    var attachmentFileId = j(this).find('td.attachFileId').text();
+
+                    //For IOS image save
+                    //var data = dataURL.replace(/data:image\/(png|jpg|jpeg);base64,/, '');
+
+                    //For Android image save
+                    var data = dataURL.replace(/data:base64,/, '');
+
+                    jsonUpdateBE["imageAttach"] = data;*/
+
+                    jsonUpdateBE["attachFileId"] = j(this).find('td.attachFileId').text();
+
+
+                    localStorage.setItem("jsonUpdateBE", JSON.stringify(jsonUpdateBE));
+
+                    //console.log(JSON.stringify(jsonUpdateBE));
+
+                    displayUpdateDetailPage();
+
+                    });
+                } else {
+                    alert(window.lang.translate('Tap and select expense to edit.'));
+                }
+
+      });
+ }
+
+
+ function displayUpdateDetailPage() {
+
+     var headerBackBtn = defaultPagePath + 'backbtnPage.html';
+     var pageRef = defaultPagePath + 'businessExpenseSendBackEditPage.html';
+     j(document).ready(function() {
+         j('#mainHeader').load(headerBackBtn);
+         j('#mainContainer').load(pageRef);
+     });
+     appPageHistory.push(pageRef);
+
+ }
+
+ function fetchReceipt(attachFileId) {
+
+     var jsonToBeSendForApproval = new Object();
+     jsonToBeSendForApproval["fileId"] = attachFileId;
+
+     j.ajax({
+         url: window.localStorage.getItem("urlPath") + "FetchAttachment",
+         type: 'POST',
+         dataType: 'json',
+         crossDomain: true,
+         data: JSON.stringify(jsonToBeSendForApproval),
+         success: function(data) {
+             if (data.Status == "Success") {
+
+                 var attachmentData = data.attachmentData;
+
+                 if (document.getElementById("img01") != null) {
+                     document.getElementById("img01").src = "data:image/png;base64," + attachmentData;
+                 }
+
+                 var modal = document.getElementById("myModalImg");
+                 modal.style.display = "block";
+
+                 requestRunning = false;
+             } else {
+                 requestRunning = false;
+             }
+         },
+         error: function(data) {
+             requestRunning = false;
+         }
+     });
+
+ }
+  //***************************** Agile Merging -- End *******************************************************//

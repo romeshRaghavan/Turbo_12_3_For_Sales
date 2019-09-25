@@ -39,8 +39,8 @@ var toLocationWayPoint = "";
 var profileImg = "";
 var enableDivBasedOnStatus = ""; // For Past Voucher = 'V' and For my Approval = 'A'
 var updateAttachment = ""; // For BE Edit
-var MOBILE_APP_VERSION = "12.1";
-var MOBILE_APP_NAME = "Expenzing TEM Agile";
+var MOBILE_APP_VERSION = "12.2";
+var MOBILE_APP_NAME = "Turbo Mobile App";
 
 j(document).ready(function() {
     document.addEventListener("deviceready", loaded, false);
@@ -57,11 +57,7 @@ function login() {
     var jsonToBeSend = new Object();
     jsonToBeSend["user"] = userName.value;
     jsonToBeSend["pass"] = password.value;
-    jsonToBeSend["MOBILE_APP_VERSION"] = MOBILE_APP_VERSION;
-    jsonToBeSend["MOBILE_APP_NAME"] = MOBILE_APP_NAME;
-    
     //setUrlPathLocalStorage(urlPath);
-    //console.log("jsonToBeSend : "+JSON.stringify(jsonToBeSend));
     urlPath = window.localStorage.getItem("urlPath");
     j('#loading').show();
     j.ajax({
@@ -796,7 +792,7 @@ function validateExpenseDetails(exp_date, exp_from_loc, exp_to_loc, exp_narratio
         return false;
     }
     if (acc_head_id == "-1") {
-        alert(window.lang.translate('Expense Type is invalid'));
+        alert(window.lang.translate('Account Head is invalid'));
         return false;
     }
     if (exp_name_id == "-1") {
@@ -1229,7 +1225,7 @@ function validatetravelDetails(travel_purpose_id, account_head_id, from_id, to_i
         return false;
     }
     if (account_head_id == "-1") {
-        alert(window.lang.translate('Expense Type is invalid'));
+        alert(window.lang.translate('Account Head is invalid'));
         return false;
     }
     if (from_id == "-1") {
@@ -1891,7 +1887,7 @@ function oprationOnExpenseClaim() {
 
                         } else {
                             if (exceptionMessage == '') {
-                                exceptionMessage = "Selected expenses should be mapped under Single Expense Type."
+                                exceptionMessage = "Selected expenses should be mapped under Single Expense Type/Account Head."
                                     // j('#displayError').children('span').text(exceptionMessage);
                                     // j('#displayError').hide().fadeIn('slow').delay(3000).fadeOut('slow');
                                 requestRunning = false;
@@ -2076,8 +2072,9 @@ function loaded() {
 }
 
 function onPhotoDataSuccess(imageData) {
-    resetUpdateImage();
     resetImageData();
+    resetUpdateImage();
+    
     if (voucherType == 'wallet') {
         smallImageWallet.style.display = 'block';
         //document.getElementById('imageWallet').files[0] = "data:image/jpeg;base64," + imageData;
@@ -2107,7 +2104,7 @@ function resetImageData() {
     fileTempGalleryTS = "";
 }
 
-function resetUpdateImage() {
+function resetUpdateImage(){
     updateAttachment = "";
 }
 
@@ -2256,14 +2253,13 @@ function hideTRIcons() {
 }
 
 function hideBusinessExpense() {
-    if (document.getElementById('businessExpenseTab') != null) {
+       if (document.getElementById('businessExpenseTab') != null) {
         if (window.localStorage.getItem("mobileEC") == "true") {
             document.getElementById('businessExpenseTab').style.display = "block";
         } else {
             document.getElementById('businessExpenseTab').style.display = "none";
         }
     }
-
 }
 
 function hideTRMenus() {
@@ -2295,10 +2291,10 @@ function validateValidMobileUser() {
                     window.lang.change(window.localStorage.getItem("localLanguage"));
                     setUserStatusInLocalStorage("Valid");
                     /*if(!data.MobileMapRole){
-                            window.localStorage.removeItem("MobileMapRole");
-                        }else{
-                            window.localStorage.setItem("MobileMapRole",data.MobileMapRole);
-                        } */
+                    		window.localStorage.removeItem("MobileMapRole");
+                    	}else{
+                    		window.localStorage.setItem("MobileMapRole",data.MobileMapRole);
+                    	} */
                 } else if (data.Status == 'NoAndroidRole') {
                     successMessage = data.Message;
                     headerBackBtn = defaultPagePath + 'expenzingImagePage.html';
@@ -3133,7 +3129,7 @@ function submitBEWithEA() {
 
             } else {
                 if (exceptionMessage == '') {
-                    exceptionMessage = "Selected expenses should be mapped under Single Expense Type."
+                    exceptionMessage = "Selected expenses should be mapped under Single Expense Type/Account Head."
                         //j('#displayError').children('span').text(exceptionMessage);
                         //j('#displayError').hide().fadeIn('slow').delay(3000).fadeOut('slow');
                         // j('#displayError').children('span').text("Selected expenses should be mapped under Single Expense Type/Account Head.");
@@ -3216,9 +3212,9 @@ function callSendForApprovalServiceForBEwithEA(jsonToSaveBE, busExpDetailsArr, e
     }
 }
 
-/*function openNav() {
+function openNav() {
     document.getElementById("mySidenav").style.width = "230px";
-}*/
+}
 
 function closeNav() {
     //document.getElementById("mySidenav").style.width = "0";
@@ -3264,6 +3260,30 @@ function createTravelMain() {
     });
     appPageHistory.push(pageRef);
 }
+
+function viewVouchers() {
+    resetImageData();
+    var headerBackBtn = defaultPagePath + 'backbtnPage.html';
+    var pageRef = defaultPagePath + 'viewApproverVouchers.html';
+    j(document).ready(function() {
+        j('#mainHeader').load(headerBackBtn);
+        j('#mainContainer').load(pageRef);
+    });
+    appPageHistory.push(pageRef);
+}
+
+function viewPastVouchers() {
+    resetImageData();
+    var headerBackBtn = defaultPagePath + 'backbtnPage.html';
+    var pageRef = defaultPagePath + 'viewApproverPastVouchers.html';
+    j(document).ready(function() {
+        j('#mainHeader').load(headerBackBtn);
+        j('#mainContainer').load(pageRef);
+    });
+    appPageHistory.push(pageRef);
+}
+
+
 
 function onloadDefaultValue() {
     clickedFlagCar = false;
@@ -3476,11 +3496,11 @@ function getExpenseDateFromSMS(input) {
 }
 
 function hideSmartClaims() {
-    /*  if(window.localStorage.getItem("smartClaimsViaSMSOnMobile") == "true"){
-            document.getElementById('smartClaimsID').style.display="";      
-        }else{
-            document.getElementById('smartClaimsID').style.display="none";
-        }*/
+    /*	if(window.localStorage.getItem("smartClaimsViaSMSOnMobile") == "true"){
+    		document.getElementById('smartClaimsID').style.display="";		
+    	}else{
+    		document.getElementById('smartClaimsID').style.display="none";
+    	}*/
 }
 
 function hideMultilanguage() {
@@ -3583,18 +3603,9 @@ function expPrimaryId() {
         alert(window.lang.translate('Tap and select expenses to edit.'));
     }
 
-/*    if (j("#source tr.selected").hasClass("selected")) {
-        j("#source tr.selected").each(function(index, row) {
-
-            getPrimaryExpenseId(j(this).find('td.expNameId').text());
-
-        });
-
-    }*/
 }
 
 function editBusiExpMain(expPrimaryId) {
-
     var busExpDetailsArr = [];
     var jsonExpenseDetailsArr = [];
     expenseClaimDates = new Object;
@@ -3671,18 +3682,18 @@ function setPerUnitDetailsForEdit(transaction, results) {
         showAttachmentmessage();
 
         document.getElementById("ratePerUnit").value = row.expRatePerUnit;
-        /*        document.getElementById("expAmt").value = "";
-                document.getElementById("expUnit").value = "";
-                document.getElementById("expFromLoc").value = "";
-                document.getElementById("expToLoc").value = "";
-                document.getElementById("expNarration").value = "";
-                document.getElementById("expUnit").value = "";
-                document.getElementById("expAmt").value = "";
-                $(".dropdown-content").hide();
-                fromLocationWayPoint = "";
-                toLocationWayPoint = "";*/
+/*        document.getElementById("expAmt").value = "";
+        document.getElementById("expUnit").value = "";
+        document.getElementById("expFromLoc").value = "";
+        document.getElementById("expToLoc").value = "";
+        document.getElementById("expNarration").value = "";
+        document.getElementById("expUnit").value = "";
+        document.getElementById("expAmt").value = "";
+        $(".dropdown-content").hide();
+        fromLocationWayPoint = "";
+        toLocationWayPoint = "";*/
         if (perUnitDetailsJSON.expenseIsfromAndToReqd == 'N') {
-            document.getElementById("expFromLoc").value = "";
+           document.getElementById("expFromLoc").value = "";
             document.getElementById("expToLoc").value = "";
             document.getElementById("expFromLoc").disabled = true;
             document.getElementById("expToLoc").disabled = true;
@@ -3697,9 +3708,9 @@ function setPerUnitDetailsForEdit(transaction, results) {
         } else {
             document.getElementById("expFromLoc").disabled = false;
             document.getElementById("expToLoc").disabled = false;
-            /*          document.getElementById("expFromLoc").value = "";
-                        document.getElementById("expToLoc").value = "";
-                        document.getElementById("expNarration").value = "";*/
+/*          document.getElementById("expFromLoc").value = "";
+            document.getElementById("expToLoc").value = "";
+            document.getElementById("expNarration").value = "";*/
             document.getElementById("expFromLoc").style.backgroundColor = '#FFFFFF';
             document.getElementById("expToLoc").style.backgroundColor = '#FFFFFF';
             $(".dropdown-content").hide();
@@ -3761,4 +3772,23 @@ function setPerUnitDetailsForEdit(transaction, results) {
 
 }
 
+
 //   ****************************************  Business Edit Page -- End  ******************************** //
+
+// ****************************************** Approval Pages -- Start  *********************************** //
+
+
+function voucherDetails(loadDiv) {
+    enableDiv = loadDiv;
+    resetImageData();
+    var headerBackBtn = defaultPagePath + 'backbtnPage.html';
+    var pageRef = defaultPagePath + 'voucherDetails.html';
+    j(document).ready(function() {
+        j('#mainHeader').load(headerBackBtn);
+        j('#mainContainer').load(pageRef);
+    });
+
+    appPageHistory.push(pageRef);
+}
+
+// ****************************************** Approval Pages -- End  *********************************** //
