@@ -3,9 +3,9 @@ var defaultPagePath = 'app/pages/';
 var headerMsg = "Expenzing";
 //var urlPath = 'http://1.255.255.36:13130/TnEV1_0AWeb/WebService/Login/'
 //var WebServicePath ='http://1.255.255.99:8681/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.95:8080/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath = 'http://1.255.255.98:8083/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath = 'http://1.255.255.98:8083/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -425,6 +425,7 @@ function sendForApprovalBusinessDetails(jsonBEArr, busExpDetailsArr, accountHead
     jsonToSaveBE["accountHeadId"] = accountHeadID;
     jsonToSaveBE["ProcessStatus"] = "1";
     jsonToSaveBE["title"] = window.localStorage.getItem("FirstName") + "/" + jsonToSaveBE["startDate"] + " to " + jsonToSaveBE["endDate"];
+    jsonToSaveBE["gradeId"] = window.localStorage.getItem("GradeID");
 
     var pageRefSuccess = defaultPagePath + 'success.html';
     var pageRefFailure = defaultPagePath + 'failure.html';
@@ -1879,6 +1880,8 @@ function oprationOnExpenseClaim() {
 
                             jsonFindBE["isEntiLineOrVoucherLevel"] = j(this).find('td.isEntiLineOrVoucherLevel').text();
                             jsonFindBE["expFixedLimitAmt"] = j(this).find('td.expFixedLimitAmt').text();
+
+                            jsonFindBE["units"] = window.localStorage.getItem("UnitId");
 
                             jsonExpenseDetailsArr.push(jsonFindBE);
 
