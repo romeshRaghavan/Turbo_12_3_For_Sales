@@ -38,7 +38,7 @@
                                             <input lang="en" placeholder="Account Head" id="accountHead" type="text" style="width: 98%">
                                         </li>
                                         <li>
-                                            <input lang="en" placeholder="Expense Name" id="expenseName" type="text" style="width: 98%">
+                                            <input lang="en" placeholder="Expense Name" id="expenseName" style="width: 98%">
                                         </li>
                                         <li>
                                             <input lang="en" id="ratePerUnit" type="hidden">
@@ -63,7 +63,11 @@
                                             <p><font lang="en" face="verdana" size="1" color="green">Unit is no. of persons/Kms/meals etc.</font></p>
                                             <input lang="en" id="expUnit" type="tel" style="width: 22%" placeholder="Units" onkeyup="calculatePerUnit();">
                                             <input id="wayPointunitValue" value="" readonly="readonly" type="hidden">
-                                            <input lang="en" id="expAmt" type="tel" style="width: 38%" placeholder="Amount" onkeyup="validate(); checkPerUnitExceptionStatusForBEAtLineLevel();checkAmount();">
+
+
+                                            <input lang="en" id="expAmt" type="text" style="width: 38%" placeholder="Amount" onkeyup="validate(); checkPerUnitExceptionStatusForBEAtLineLevel();checkAmount();">
+
+
                                             <input id="currency" type="hidden" style="width: 33%">
                                             <p id="errorMsgArea"><span id="errorSpan"></span></p>
                                         </li>
@@ -99,6 +103,7 @@
                             </div>
                         </div>
                         <script>
+
                             hideEAIcons();
                             var currentMonth;
                             var currentDate;
