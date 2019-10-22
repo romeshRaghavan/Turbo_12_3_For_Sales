@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.tne.expenzingturbotnev12" version="12.2.0" android-versionCode="105" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-<!--widget id="com.expenzing.expenzing" version="1.1.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0"-->
-    <name>Turbo</name>
-    <description>
-        Expenzing Application
-    </description>
-    <author email="tech@expenzing.com" href="http://www.expenzing.com">
-        Team Expenzing
-    </author> 
-     <content src="index.html" />
+    <widget id="com.phonegap.tne.expenzingturbotnev12" version="12.2.0" android-versionCode="106" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+        <!--widget id="com.expenzing.expenzing" version="1.1.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0"-->
+        <name>Expenzing Turbo</name>
+        <description>
+            Expenzing Application
+        </description>
+        <author email="tech@expenzing.com" href="http://www.expenzing.com">
+            Team Expenzing
+        </author>
+        <content src="index.html" />
         <preference name="permissions" value="none" />
         <preference name="orientation" value="portrait" />
         <preference name="target-device" value="universal" />
@@ -45,21 +45,22 @@
         <variable name="NSLocationAlwaysUsageDescription" value="App requires access to the photo library" />
         <variable name=" NSLocationWhenInUseUsageDescription" value="App requires access to the photo library" />
         
-		<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-		<string>need camera access to take pictures</string>
-		</edit-config>
+    <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+    <string>This enables use of camera to attach receipt for expense submission</string>
+    </edit-config>
+    
+    <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+    <string>This enables access to gallery to fetches receipt stored for expense </string>
+    </edit-config>
+    
+    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+    <string>This enables access to location used while expense submission</string>
+    </edit-config>
+    
+    <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+    <string>This enables access to gallery to fetches receipt stored for expense</string>
+    </edit-config>
 
-		<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-		<string>need photo library access to get pictures from there</string>
-		</edit-config>
-
-		<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-		<string>need location access to find things nearby</string>
-		</edit-config>
-
-		<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
-		<string>need photo library access to save pictures there</string>
-		</edit-config>
 
         <gap:plugin name="cordova-plugin-media-capture" source="npm" />
         <gap:plugin name="cordova-plugin-console" source="npm" />
@@ -116,4 +117,3 @@
         </platform>
 
     </widget>
-
