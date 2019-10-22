@@ -1881,8 +1881,6 @@ function oprationOnExpenseClaim() {
                             jsonFindBE["isEntiLineOrVoucherLevel"] = j(this).find('td.isEntiLineOrVoucherLevel').text();
                             jsonFindBE["expFixedLimitAmt"] = j(this).find('td.expFixedLimitAmt').text();
 
-                            jsonFindBE["units"] = window.localStorage.getItem("UnitId");
-
                             jsonExpenseDetailsArr.push(jsonFindBE);
 
                             busExpDetailsArr.push(busExpDetailId);
