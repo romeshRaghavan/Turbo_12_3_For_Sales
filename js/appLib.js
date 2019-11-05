@@ -187,7 +187,7 @@ function arrayRemove(arr, value) {
 
         // ****************     Approval Table      ***************** //
 
-         t.executeSql("CREATE TABLE IF NOT EXISTS BEHeader ( busExpHeaderId INTEGER ,busExpNumber TEXT,accHeadId INTEGER REFERENCES accountHeadMst(accHeadId),accHeadDesc TEXT,voucherDate DATE,startDate DATE,endDate DATE,currencyId INTEGER REFERENCES currencyMst(currencyId),currencyName TEXT,editorTotalAmt DOUBLE,vocherStatus TEXT, currentOwnerId INTEGER, currentOwnerName TEXT, rejectionComments TEXT)");
+         t.executeSql("CREATE TABLE IF NOT EXISTS BEHeader ( busExpHeaderId INTEGER ,busExpNumber TEXT,accHeadId INTEGER REFERENCES accountHeadMst(accHeadId),accHeadDesc TEXT,voucherDate DATE,startDate DATE,endDate DATE,currencyId INTEGER REFERENCES currencyMst(currencyId),currencyName TEXT,editorTotalAmt DOUBLE,vocherStatus TEXT, currentOwnerId INTEGER, currentOwnerName TEXT,  createdById INTEGER, creatorName TEXT,rejectionComments TEXT)");
          t.executeSql("CREATE TABLE IF NOT EXISTS BEDetails (busExpDetailId INTEGER ,busExpHeaId INTEGER , expNameId INTEGER REFERENCES expNameMst(expNameId), expName  TEXT,expDate DATE,currencyId INTEGER REFERENCES currencyMst(currencyId),currencyName TEXT, perUnit INTEGER,fromLocation TEXT,toLocation TEXT,convertedAmt DOUBLE ,expAttachment BLOB)");
 
      });
@@ -4733,7 +4733,7 @@ function arrayRemove(arr, value) {
 
      //  My Expense Pages
 
-     if(statusOfVoucher == 'F' || statusOfVoucher == 'R' || statusOfVoucher == 'P' || statusOfVoucher == 'U'){
+     if(statusOfVoucher == 'F' || statusOfVoucher == 'R' || statusOfVoucher == 'P' || statusOfVoucher == 'U' || statusOfVoucher == 'D'){
          var headerBackBtn = defaultPagePath + 'backbtnPage.html';
          var pageRef = defaultPagePath + 'viewApproverPastVouchers.html';
          appPageHistory.push(pageRef);
@@ -4787,13 +4787,15 @@ function arrayRemove(arr, value) {
                                  var currentOwnerId = headArray.currentOwnerId;
                                  var currentOwnerName = headArray.currentOwnerName;
                                  var rejectionComments = headArray.rejectionComments;
+                                 var createdById = headArray.createdById;
+                                 var creatorName =  headArray.creatorName
 
-                                 t.executeSql("INSERT INTO BEHeader (busExpHeaderId ,busExpNumber ,accHeadId ,accHeadDesc ,voucherDate ,startDate ,endDate ,currencyId ,currencyName ,editorTotalAmt ,vocherStatus , currentOwnerId, currentOwnerName, rejectionComments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [busExpHeaderId, busExpNumber, accHeadId, accHeadDesc, voucherDate, startDate, endDate, currencyId, currencyName, editorTotalAmt, vocherStatus, currentOwnerId, currentOwnerName, rejectionComments]);
+                                 t.executeSql("INSERT INTO BEHeader (busExpHeaderId ,busExpNumber ,accHeadId ,accHeadDesc ,voucherDate ,startDate ,endDate ,currencyId ,currencyName ,editorTotalAmt ,vocherStatus , currentOwnerId, currentOwnerName, createdById, creatorName , rejectionComments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [busExpHeaderId, busExpNumber, accHeadId, accHeadDesc, voucherDate, startDate, endDate, currencyId, currencyName, editorTotalAmt, vocherStatus, currentOwnerId, currentOwnerName, createdById, creatorName , rejectionComments]);
 
                              }
                          }
                          requestRunning = false;
-                         if (statusOfVoucher == 'F' || statusOfVoucher == 'R' || statusOfVoucher == 'P' || statusOfVoucher == 'U') {
+                         if (statusOfVoucher == 'F' || statusOfVoucher == 'R' || statusOfVoucher == 'P' || statusOfVoucher == 'U' || statusOfVoucher == 'D') {
                              displayPastVoucherPage(data.Status);
                          } else {
                              displayApprovalPage(data.Status);
@@ -4803,14 +4805,14 @@ function arrayRemove(arr, value) {
 
                  } else if (data.Status == 'SUCCESS_NO_DATA') {
                      requestRunning = false;
-                     if (statusOfVoucher == 'F' || statusOfVoucher == 'R' || statusOfVoucher == 'P' || statusOfVoucher == 'U') {
+                     if (statusOfVoucher == 'F' || statusOfVoucher == 'R' || statusOfVoucher == 'P' || statusOfVoucher == 'U' || statusOfVoucher == 'D') {
                          displayPastVoucherPage(data.Status);
                      } else {
                          displayApprovalPage(data.Status);
                      }
                  } else {
                      requestRunning = false;
-                     if (statusOfVoucher == 'F' || statusOfVoucher == 'R' || statusOfVoucher == 'P' || statusOfVoucher == 'U') {
+                     if (statusOfVoucher == 'F' || statusOfVoucher == 'R' || statusOfVoucher == 'P' || statusOfVoucher == 'U' || statusOfVoucher == 'D') {
                          displayPastVoucherPage(data.Status);
                      } else {
                          displayApprovalPage(data.Status);
@@ -4879,7 +4881,7 @@ function arrayRemove(arr, value) {
                      for (record = 0; record < result.rows.length; record++) {
                          var row = result.rows.item(record);
 
-                         if (row.vocherStatus == 'R' || row.vocherStatus == 'D') {
+                         if (row.vocherStatus == 'R') {
                              statusForEdit = 'Sent Back';
                          } else if (row.vocherStatus == 'P') {
                              statusForEdit = 'Pending';
@@ -4888,6 +4890,12 @@ function arrayRemove(arr, value) {
                          }  else if (row.vocherStatus == 'U') {
                              statusForEdit = 'Unpaid';
                              pendingAt = 'Payment Desk'
+                         }  else if(row.vocherStatus == 'D'){
+                             statusForEdit = 'Draft';
+                         }
+
+                         if(enableDivBasedOnStatus == "A"){
+                            pendingAt = row.creatorName;
                          }
 
                         if(pendingAt == ""){
@@ -4955,6 +4963,9 @@ function arrayRemove(arr, value) {
 
                      for(var i = 0 ; i < arrayOfCount.length ; i++){
 
+                        if(arrayOfCount[i].includes("D") && document.getElementById('draftCount') != null){
+                            document.getElementById("draftCount").innerHTML = arrayOfCount[i].match(/\d+/);
+                        }
                         if(arrayOfCount[i].includes("P") && document.getElementById('pendingCount') != null){
                             document.getElementById("pendingCount").innerHTML = arrayOfCount[i].match(/\d+/);
                         }
@@ -5123,7 +5134,7 @@ function arrayRemove(arr, value) {
                      for (record = 0; record < result.rows.length; record++) {
                          var row = result.rows.item(record);
 
-                         if (row.vocherStatus == 'R'|| row.vocherStatus == 'D') {
+                         if (row.vocherStatus == 'R') {
                              statusForEdit = 'Sent Back';
                          } else if (row.vocherStatus == 'P') {
                              statusForEdit = 'Pending';
@@ -5132,6 +5143,12 @@ function arrayRemove(arr, value) {
                          }  else if (row.vocherStatus == 'U') {
                              statusForEdit = 'Unpaid';
                              pendingAt = 'Payment Desk'
+                         }  else if (row.vocherStatus == 'D') {
+                             statusForEdit = 'Draft';
+                         }
+
+                        if(enableDivBasedOnStatus == "A"){
+                            pendingAt = row.creatorName;
                          }
 
                           if(pendingAt == ""){
@@ -5185,7 +5202,7 @@ function arrayRemove(arr, value) {
 
                          j('#voucherDetailsTab').append(data);
 
-                         if (statusForEdit == 'Sent Back' || statusForEdit == 'Draft') {
+                         if (statusForEdit == 'Sent Back') {
 
                              buttonValue =   
                                             "<br>"
@@ -5198,6 +5215,16 @@ function arrayRemove(arr, value) {
 
                              j('#buttonsAttached').append(buttonValue);
                          }
+
+                         if (statusForEdit == 'Draft') {
+
+                             buttonValue =  
+                                            "<div class='col-md-12' id = 'editButton' style='text-align: center;padding-bottom: 20px;'>" + "<button type='submit' class='btn btn-primary' onclick='expPrimaryIdSB()'>Edit</button>&nbsp;" 
+                                            +"<button type='submit' id = 'sendForApproveBtn' class='btn btn-primary' onclick='approveVoucher(" + row.busExpHeaderId + ")'>Send For Approval</button>&nbsp;" + "</div>";
+
+                             j('#buttonsAttached').append(buttonValue);
+                         }
+
                          if(enableDivBasedOnStatus == 'A'){
                              buttonValue =  "<div class='col-md-12' style='text-align: center; padding-bottom: 20px;'>"
                                             +"<button type='submit' id = 'approveBtn' class='btn btn-primary' onclick='approveVoucher("+row.busExpHeaderId+")'>Approve</button>&nbsp;"
@@ -5225,7 +5252,6 @@ function arrayRemove(arr, value) {
                  }
 
              });
-
      });
 
  }
