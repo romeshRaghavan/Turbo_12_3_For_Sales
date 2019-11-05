@@ -745,6 +745,7 @@ a:hover {
 .main-wrapper {
     margin: 0 auto;
     height: 200px;
+    padding-top: 10%;
 }
 
 .startLoginPage {
@@ -1025,7 +1026,7 @@ div.image {
 .accordions {
     padding-bottom: 40px;
     background-color: #fff;
-    padding-top: 20px;
+  /*  padding-top: 20px;*/
 }
 
 .languagebar {
@@ -1097,8 +1098,8 @@ div.image {
 .modal-content {
     position: relative;
     outline: 0;
-    background: url(../images/background-expense.jpg);
-    background-repeat: no-repeat;
+   /* background: url(../images/background-expense.jpg);*/
+  /*  background-repeat: no-repeat;*/
     border: none;
     background-position: 0 -50px;
     -webkit-box-shadow: none;
@@ -1274,4 +1275,19 @@ div.image {
     font-weight: bold;
     border: none;
 
+}
+
+
+#grad1 {
+/*   background-color: #56b1bf;
+   background-image: linear-gradient(141deg,#56b1bf 0%, #56b1bf 51%,#08708a 75%);
+   opacity: 0.95;
+*/
+   /* background-color: #dae9e4;
+    background-image: linear-gradient(141deg,#dae9e4 0%, #a7e1de 51%,#a7e1de 75%);
+    opacity: 0.95;*/
+
+    background-color: #56b1bf;
+    background-image: linear-gradient(141deg,#154a78 0%, #63becc 51%,#154a78 75%);
+    opacity: 0.95;
 }
