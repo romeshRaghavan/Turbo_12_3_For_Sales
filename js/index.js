@@ -3,7 +3,8 @@ var defaultPagePath = 'app/pages/';
 var headerMsg = "Expenzing";
 //var urlPath = 'http://1.255.255.36:13130/TnEV1_0AWeb/WebService/Login/'
 //var WebServicePath ='http://1.255.255.99:8681/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath = 'https://appservices.expenzing.com/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.95:8080/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath = 'http://1.255.255.98:8083/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
@@ -3728,7 +3729,7 @@ function setPerUnitDetailsForEdit(transaction, results) {
             }
         }
         if (perUnitDetailsJSON.isUnitReqd == 'Y') {
-            document.getElementById("expAmt").value = "";
+            //document.getElementById("expAmt").value = "";
             if (perUnitDetailsJSON.expFixedOrVariable == 'V') {
                 flagForUnitEnable = true;
                 if (perUnitDetailsJSON.expenseIsfromAndToReqd == 'Y' && window.localStorage.getItem("MobileMapRole") == 'true') {
