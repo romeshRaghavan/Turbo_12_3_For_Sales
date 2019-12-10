@@ -5395,8 +5395,7 @@ function rejectVoucher(){
 
  function onloadExpenseElementSB() {
     var jsonFindBEEditValues = JSON.parse(window.localStorage.getItem("jsonUpdateBE"));
-    //var accHeadId = jsonFindBEEditValues.accountHeadId;
-    var accHeadId = 1;
+    var accHeadId = jsonFindBEEditValues.accountHeadId;
 
      if (mydb) {
          mydb.transaction(function(t) {
