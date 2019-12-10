@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-    <widget id="com.phonegap.tne.expenzingturbotnev12" version="12.2.2" android-versionCode="106" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <widget id="com.phonegap.tne.expenzingturbotnev12" version="12.2.3" android-versionCode="106" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
         <!--widget id="com.expenzing.expenzing" version="1.1.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0"-->
-        <name>Expenzing Turbo</name>
+        <name>Expenzing | Travel & Expense Mgmt</name>
         <description>
             Expenzing Application
         </description>
@@ -25,7 +25,7 @@
         <preference name="android-minSdkVersion" value="14" />
         <preference name="android-maxSdkVersion" value="29" />
         <preference name="android-targetSdkVersion" value="26" />
-        <preference name='phonegap-version' value='cli-7.1.0' />
+        <preference name='phonegap-version' value='cli-7.0.1' />
         <preference name="android-installLocation" value="auto" />
 
         <feature name="http://api.phonegap.com/1.0/device" />
