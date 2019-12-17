@@ -1205,6 +1205,17 @@ div.image {
     border-color: #f4f4f4;;
 }
 
+.threebtn4 {
+    width: 33.3%;
+    font-size: 12px;
+    border-radius: 0;
+    border: 1px solid #ccc;
+    float: left;
+    background-color: #337ab7;
+    border-color: #f4f4f4;;
+}
+
+
 .dropdown-menu {
     position: absolute;
     left: auto;
