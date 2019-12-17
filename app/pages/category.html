@@ -193,7 +193,7 @@
     </div>
     <div class="col-md-6 accordions">
          <section class="ac-container">
-           <div  class="allcats">
+           <div class="allcats">
                   <div onclick="pastVoucherViews()" class="kebab" style="float:right;">
                     <figure></figure>
                     <figure class="middle"></figure>
@@ -236,4 +236,9 @@
 
 <script type="text/javascript">
     fetchCountForMyApproval('A');
+
+    if(window.localStorage.getItem("APPLICATION_VERSION") == false || window.localStorage.getItem("versionNumber") < 12.2){
+        document.getElementById('approver').style.display = 'none';
+        $('.kebab').hide();
+    }
 </script>
