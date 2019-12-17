@@ -1346,6 +1346,14 @@ function arrayRemove(arr, value) {
      window.localStorage.setItem("UnitId", val.UnitId);
      window.localStorage.setItem("MapProvider", val.MapProvider);
 
+     if (!val.hasOwnProperty('APPLICATION_VERSION')) {
+         window.localStorage.setItem("APPLICATION_VERSION", false);
+     } else {
+         window.localStorage.setItem("APPLICATION_VERSION", val.APPLICATION_VERSION);
+         var versionNumber = parseFloat(val.APPLICATION_VERSION.match(/[\d\.]+/));
+         window.localStorage.setItem("versionNumber", versionNumber);
+     }
+
      //For Mobile Google Map Role Start
      //End
      if (!val.hasOwnProperty('MobileMapRole')) {
