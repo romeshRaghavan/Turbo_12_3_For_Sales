@@ -3191,7 +3191,8 @@ function sendForApprovalBusinessDetailsWithEa(jsonBEArr, jsonEAArr, busExpDetail
     jsonToSaveBE["accountHeadId"] = accountHeadID;
     jsonToSaveBE["ProcessStatus"] = "1";
     jsonToSaveBE["title"] = window.localStorage.getItem("FirstName") + "/" + jsonToSaveBE["startDate"] + " to " + jsonToSaveBE["endDate"];
-
+    jsonToSaveBE["gradeId"] = window.localStorage.getItem("GradeID");
+    
     var pageRefSuccess = defaultPagePath + 'success.html';
     var pageRefFailure = defaultPagePath + 'failure.html';
     callSendForApprovalServiceForBEwithEA(jsonToSaveBE, busExpDetailsArr, empAdvArr, pageRefSuccess, pageRefFailure);
