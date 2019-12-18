@@ -28,7 +28,7 @@
         Expenses not synchronized successfully.
     </div>
 </div>
-<div id = "saveWithEdit" class="savesyncwrapper">
+<div class="savesyncwrapper">
      <button class="btn btn-primary btn-lg threebtn3 selectionSubmitBEBtns" id="editBE">
         <i class="fa fa-trash"></i>&nbsp;  Edit</button>
 
@@ -41,25 +41,11 @@
         <button class="btn btn-primary btn-lg threebtn3 selectionSubmitBEBtns" id="delete">
         <i class="fa fa-trash"></i>&nbsp;  Delete</button>
 </div>
-
-<div id = "saveWithoutEdit" class="savesyncwrapper">    
-         <button class="btn btn-primary btn-lg threebtn4 selectionSubmitBEBtns" id="synch">
-        <i class="fa fa-skyatlas"></i>&nbsp;  Sync</button>    
-
-         <button class="btn btn-primary btn-lg threebtn4 selectionSubmitBEBtns" id="send">
-        <i class="fa fa-arrow-circle-right"></i>&nbsp; Approval</button>
-
-        <button class="btn btn-primary btn-lg threebtn4 selectionSubmitBEBtns" id="delete">
-        <i class="fa fa-trash"></i>&nbsp;  Delete</button>
-</div>
 <script>
     oprationOnExpenseClaim();
     hideMultilanguage();
 
-
-    if(window.localStorage.getItem("APPLICATION_VERSION") == false || window.localStorage.getItem("versionNumber") < 12.2){
-        document.getElementById('saveWithEdit').style.display = 'none';
-    }else{
-        document.getElementById('saveWithoutEdit').style.display = 'none';
-    }
+   /* if(window.localStorage.getItem("APPLICATION_VERSION") == false || window.localStorage.getItem("versionNumber") <= 12.2){
+        document.getElementById('editBE').style.display = 'none';
+    }*/
 </script>
