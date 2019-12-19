@@ -2108,7 +2108,7 @@ function resetImageData() {
 }
 
 function hideImageBlock(){
-     if (fileTempCameraBE == "" || fileTempGalleryBE == "") {
+     if (fileTempCameraBE == "" && fileTempGalleryBE == "" && updateAttachment == "") {
             document.getElementById('smallImageBE').style.display = "none";
     }
 }
