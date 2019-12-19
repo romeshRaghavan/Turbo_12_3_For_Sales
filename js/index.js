@@ -48,6 +48,7 @@ j(document).ready(function() {
 });
 
 function login() {
+    dropDetailTables();
     if (document.getElementById("userName") != null) {
         var userName = document.getElementById("userName");
     } else if (document.getElementById("userName") != null) {
