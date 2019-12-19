@@ -2105,7 +2105,9 @@ function resetImageData() {
     fileTempCameraTS = "";
     fileTempGalleryBE = "";
     fileTempGalleryTS = "";
-    smallImageBE.style.display = ''; 
+     if (document.getElementById('smallImageBE') != null) {
+            document.getElementById('smallImageBE').style.display = "";
+    }
 }
 
 function resetUpdateImage(){
