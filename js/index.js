@@ -2105,6 +2105,7 @@ function resetImageData() {
     fileTempCameraTS = "";
     fileTempGalleryBE = "";
     fileTempGalleryTS = "";
+    smallImageBE.style.display = ''; 
 }
 
 function resetUpdateImage(){
