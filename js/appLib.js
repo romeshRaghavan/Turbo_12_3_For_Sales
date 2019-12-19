@@ -1457,6 +1457,17 @@ function arrayRemove(arr, value) {
 
  }
 
+  function dropDetailTables() {
+
+     mydb.transaction(function(t) {
+
+         t.executeSql("delete from businessExpDetails");
+         t.executeSql("delete from walletMst");
+         t.executeSql("delete from travelSettleExpDetails");      
+     });
+
+ }
+
  function getUserID() {
      userKey = window.localStorage.getItem("EmployeeId");
      if (userKey == null) return "";
