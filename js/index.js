@@ -2105,10 +2105,14 @@ function resetImageData() {
     fileTempCameraTS = "";
     fileTempGalleryBE = "";
     fileTempGalleryTS = "";
+}
+
+function hideImageBlock(){
      if (document.getElementById('smallImageBE') != null) {
-             document.getElementById('smallImageBE').style.display = "none";
+            document.getElementById('smallImageBE').style.display = "none";
     }
 }
+
 
 function resetUpdateImage(){
     updateAttachment = "";
