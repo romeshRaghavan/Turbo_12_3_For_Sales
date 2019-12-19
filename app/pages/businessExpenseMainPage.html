@@ -128,8 +128,8 @@
                             j("#accountHead").change(function() {
                                 getExpenseNamesBasedOnAccountHead();
                                 resetImageData();
-                                smallImageBE.style.display = '';
-                                imageBE.style.display = '';
+                                document.getElementById('smallImageBE').style.display = "none";
+                                document.getElementById('imageBE').style.display = "none";
                             });
                             j("#expenseName").change(function() {
                                 getPerUnitBasedOnExpense();
