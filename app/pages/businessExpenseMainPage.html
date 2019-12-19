@@ -127,6 +127,7 @@
                             document.getElementById("expDate").value = currentMonth + "/" + currentDate + "/" + currentYear;
                             j("#accountHead").change(function() {
                                 getExpenseNamesBasedOnAccountHead();
+                                resetImageData();
                             });
                             j("#expenseName").change(function() {
                                 getPerUnitBasedOnExpense();
