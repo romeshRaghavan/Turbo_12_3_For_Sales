@@ -440,7 +440,7 @@ function callSendForApprovalServiceForBE(jsonToSaveBE, busExpDetailsArr, pageRef
     j('#loading_Cat').show();
     var headerBackBtn = defaultPagePath + 'backbtnPage.html';
 
-    var status = true;
+    var status = validateExpenseAmtForVoucher(jsonToSaveBE);
 
     if (status == true) {
 
@@ -3211,7 +3211,7 @@ function callSendForApprovalServiceForBEwithEA(jsonToSaveBE, busExpDetailsArr, e
     j('#loading_Cat').show();
     var headerBackBtn = defaultPagePath + 'backbtnPage.html';
 
-    var status = true;
+    var status = validateExpenseAmtForVoucher(jsonToSaveBE);
 
     if (status == true) {
 
