@@ -1,54 +1,42 @@
 <script type="text/javascript">
-    var lang = new Lang();
-    lang.dynamic('th', 'js/langpack/th.json');
-    lang.dynamic('ru', 'js/langpack/russian.json');
-    lang.dynamic('ae', 'js/langpack/arabic.json');
-    lang.dynamic('tamil', 'js/langpack/tamil.json');
-    lang.dynamic('hindi', 'js/langpack/hindi.json');
-    lang.dynamic('ka', 'js/langpack/kannada.json');
-    lang.dynamic('sd', 'js/langpack/swidish.json');
-    lang.dynamic('vt', 'js/langpack/vietnam.json');
-    lang.init({
-        defaultLang: 'en'
-    });
+		var lang = new Lang();
+		lang.dynamic('th', 'js/langpack/th.json');
+        lang.dynamic('ru','js/langpack/russian.json');
+        lang.dynamic('ae','js/langpack/arabic.json');
+        lang.dynamic('tamil','js/langpack/tamil.json');
+        lang.dynamic('hindi','js/langpack/hindi.json');
+        lang.dynamic('ka','js/langpack/kannada.json');
+		lang.init({
+			defaultLang: 'en'
+		});
 </script>
-<script>
-    var headerValue = headerMsg;
-    document.getElementById("headerId").innerHTML = headerValue;
-</script>
-<div class="topfixednavigate">
-    <span onclick="goBack();" class="backbluebtn"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
-    <img class="expenzingImg" src="images/Expenzing_Square.png" onclick="goBack();" />
-    <H4 id="headerId" class="headerposition"></H4>
+<div class="topfixednavigate" >
+<a href="#" class="backarrowbtn">
+<img src="images/left-arrow.png" width="15px" height="25px" onclick="goBack();"/>
+<img class="expenzingImg" src="images/Expenzing_Square.png" onclick="goBack();"/></a>
+<img class="selectionDeleteBEBtns" width="35px" height="25px" src="images/delete.png" id="delete" >
+<img class="selectionSynchBEBtns" width="35px" height="25px" src="images/synch.png" id="synch" >
+<img class="selectionSubmitBEBtns" width="35px" height="25px" src="images/submit.png" id="send" >
+<H4 id="headerId" class="headerposition"></H4>
+<spen id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#" onclick="showSyncMaster()" lang="en" >Sync Masters</a>
+  <a href="#" id='multiLang' onclick="showMultiLanguag()" lang="en">Settings</a>
+  <!--<a href="#"  onclick="showHelpMenu()" lang="en">Help</a>-->
 
-    <div style="display:none" id="syncSuccessMsg" class="displaysynctext" lang="en">
-        Expenses synchronized successfully.
-    </div>
-    <div style="display:none" id="syncFailureMsg" class="displaysynctext" lang="en">
-        Expenses not synchronized successfully.
-    </div>
-</div>
-<div class="savesyncwrapper">
-     <button class="btn btn-primary btn-lg selectionSubmitBEBtns threebtn3" id="editBE">
-        <i class="fa fa-trash"></i>&nbsp;  Edit</button>
+</spen>
 
-         <button class="btn btn-primary btn-lg selectionSubmitBEBtns threebtn3" id="send">
-        <i class="fa fa-arrow-circle-right"></i>&nbsp; Approval</button>
-
-        <button class="btn btn-primary btn-lg selectionSubmitBEBtns threebtn3" id="synch">
-        <i class="fa fa-skyatlas"></i>&nbsp;  Sync</button>    
-
-        <button class="btn btn-primary btn-lg selectionSubmitBEBtns threebtn3" id="delete">
-        <i class="fa fa-trash"></i>&nbsp;  Delete</button>
+<span style="font-size:30px;cursor:pointer;position: absolute;left: auto;top: inherit;right: inherit;padding-right: 16px;padding-top: 10px;" align="right" onclick="openNav();"><img src="css/cssimages/nav-icon.png" width="30px" height="25px"/></span>
+ <div style="display:none" id="syncSuccessMsg" class="displaysynctext" lang="en">
+               Expenses synchronized successfully.
+  		</div>
+		<div style="display:none" id="syncFailureMsg" class="displaysynctext" lang="en">
+               Expenses not synchronized successfully.
+  		</div>
 </div>
 <script>
-    oprationOnExpenseClaim();
+	oprationOnExpenseClaim();
+	//hideTRMenus();
+    //hideEAMenus();
     hideMultilanguage();
-
-    if(window.localStorage.getItem("APPLICATION_VERSION") == false || window.localStorage.getItem("versionNumber") < 12.2){
-        document.getElementById('editBE').style.display = 'none';
-        $("#send").addClass("threebtn4");
-        $("#synch").addClass("threebtn4");
-        $("#delete").addClass("threebtn4");
-    }
 </script>
