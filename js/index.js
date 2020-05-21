@@ -3,10 +3,9 @@ var defaultPagePath='app/pages/';
 var headerMsg = "Expenzing";
 //var urlPath = 'http://1.255.255.36:13130/TnEV1_0AWeb/WebService/Login/'
 //var WebServicePath ='http://1.255.255.184:8085/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath = 'https://appservices.expenzing.com/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.98:8082/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'https://appservices.expenzing.com/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -136,8 +135,8 @@ function commanLogin(){
  	var domainName = userNameValue.split('@')[1];
 	 var jsonToDomainNameSend = new Object();
 	jsonToDomainNameSend["userName"] = domainName;
-	//jsonToDomainNameSend["mobilePlatform"] = device.platform;
-	jsonToDomainNameSend["mobilePlatform"] = "Android";
+	jsonToDomainNameSend["mobilePlatform"] = device.platform;
+	//jsonToDomainNameSend["mobilePlatform"] = "Android";
 	jsonToDomainNameSend["appType"] = "NEXGEN_EXPENZING_TNE_APP";
   	//var res=JSON.stringify(jsonToDomainNameSend);
 	var requestPath = WebServicePath;
@@ -2415,23 +2414,18 @@ function hideDropDownContents(){
  function calulateUnitFromLoction(){
 
 if(fromLocationWayPoint != '' && toLocationWayPoint != ''){
-	//alert("fromLocationWayPoint :"+fromLocationWayPoint);
 if(fromLocationWayPoint.includes("$") && toLocationWayPoint.includes("$")){
 var fromLongLat = fromLocationWayPoint.split('$');
-//alert("fromLongLat :"+fromLongLat);
 var fromLat = fromLongLat[0];
 var fromLong = fromLongLat[1];
 
 var toLongLat = toLocationWayPoint.split('$');
-//alert("toLongLat :"+toLongLat);
 var toLat = toLongLat[0];
 var toLong = toLongLat[1];
-
-
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "https://apis.mapmyindia.com/advancedmaps/v1/bemzvgf9d3at3j7rt85bpvmwuhaumd59/distance?center="+fromLat+","+fromLong+"&pts="+toLat+","+toLong+"",
+  "url": "https://apis.mapmyindia.com/advancedmaps/v1/bemzvgf9d3at3j7rt85bpvmwuhaumd59/distance_matrix/driving/"+fromLong+","+fromLat+";"+toLong+","+toLat+"",
   "method": "GET",
   "headers": {
   "cache-control": "no-cache"
@@ -2462,11 +2456,12 @@ $.ajax(settings).done(function (response) {
 function setUnitBasedOnResponse(response){
 	console.log(JSON.stringify(response));
 
-	 $.each(response.results,function(i,obj){
-	var units = obj.length;
+	 $.each(response.results.distances,function(i,obj){
+	var f_units = obj;
+    var units = Math.trunc(f_units[1])
 	var unitKM = parseInt(units)/1000;
  	unitValue = document.getElementById("expUnit");
-	unitValue.value = unitKM;
+	unitValue.value = Math.round(unitKM);
 	 });
 	 returnUnitResult();
 }
